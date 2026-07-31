@@ -44,7 +44,7 @@
 			}
 
 			#app {
-				max-width: 1160px;
+				max-width: 1420px;
 				margin: 0 auto;
 			}
 
@@ -159,17 +159,17 @@
 			.grid {
 				display: grid;
 				grid-template-columns: repeat(7, minmax(0, 1fr));
-				gap: 8px;
+				gap: 10px;
 			}
 
 			.day {
 				border-radius: 14px;
 				border: 1px solid #eadfce;
-				min-height: 148px;
+				min-height: 124px;
 				padding: 8px;
 				display: flex;
 				flex-direction: column;
-				gap: 6px;
+				gap: 4px;
 				background: rgba(255, 255, 255, 0.82);
 				transition: transform 0.1s ease, border-color 0.15s ease;
 			}
@@ -200,14 +200,6 @@
 				font-size: 13px;
 			}
 
-			.mini {
-				font-size: 11px;
-				border-radius: 999px;
-				padding: 2px 6px;
-				background: #f6f6f6;
-				color: var(--muted);
-			}
-
 			.status {
 				display: grid;
 				gap: 4px;
@@ -233,7 +225,7 @@
 				align-items: center;
 				justify-content: center;
 				width: 100%;
-				height: 18px;
+				height: 17px;
 				padding: 0 4px;
 				border-radius: 7px;
 				border: 1px solid transparent;
@@ -372,6 +364,69 @@
 				margin-bottom: 8px;
 			}
 
+			.stats-panel {
+				display: grid;
+				gap: 12px;
+			}
+
+			.stats-head {
+				display: flex;
+				flex-wrap: wrap;
+				align-items: center;
+				gap: 10px;
+			}
+
+			.stat-group {
+				border: 1px dashed #e6d3be;
+				border-radius: 14px;
+				padding: 10px;
+				background: rgba(255, 255, 255, 0.72);
+			}
+
+			.stat-group h4 {
+				margin: 0 0 8px;
+			}
+
+			.stat-row {
+				display: grid;
+				grid-template-columns: 88px 1fr 58px;
+				gap: 8px;
+				align-items: center;
+				margin: 6px 0;
+			}
+
+			.stat-label {
+				font-size: 13px;
+			}
+
+			.bar-track {
+				height: 14px;
+				border-radius: 999px;
+				background: #f2eee7;
+				overflow: hidden;
+				border: 1px solid #e4d6c5;
+			}
+
+			.bar-fill {
+				height: 100%;
+				border-radius: 999px;
+				transition: width 0.25s ease;
+			}
+
+			.bar-fill.colly {
+				background: linear-gradient(90deg, #7ab0ff, #357ce2);
+			}
+
+			.bar-fill.bbaebjji {
+				background: linear-gradient(90deg, #ff9bc8, #e25697);
+			}
+
+			.stat-value {
+				font-size: 12px;
+				color: var(--muted);
+				text-align: right;
+			}
+
 			.modal-backdrop {
 				position: fixed;
 				inset: 0;
@@ -436,7 +491,11 @@
 				}
 
 				.day {
-					min-height: 130px;
+					min-height: 114px;
+				}
+
+				.stat-row {
+					grid-template-columns: 78px 1fr 52px;
 				}
 			}
 
@@ -446,13 +505,22 @@
 				}
 
 				.day {
-					min-height: 120px;
+					min-height: 104px;
 					padding: 6px;
 				}
 
 				.task-icon {
-					font-size: 13px;
-					height: 16px;
+					font-size: 12px;
+					height: 15px;
+				}
+
+				.stat-row {
+					grid-template-columns: 1fr;
+					gap: 4px;
+				}
+
+				.stat-value {
+					text-align: left;
 				}
 			}
 		</style>
@@ -471,6 +539,7 @@
 				<div class="tabs">
 					<button class="tab-btn" :class="{ active: activeTab === 'calendar' }" @click="activeTab = 'calendar'">달력보기</button>
 					<button class="tab-btn" :class="{ active: activeTab === 'record' }" @click="activeTab = 'record'">기록하기</button>
+					<button class="tab-btn" :class="{ active: activeTab === 'stats' }" @click="activeTab = 'stats'">통계</button>
 				</div>
 			</section>
 
@@ -497,7 +566,6 @@
 						>
 							<div class="day-top">
 								<span class="date-num">{{ day.dateObj.getDate() }}</span>
-								<span class="mini" v-if="day.record">저장됨</span>
 							</div>
 							<div class="status" v-if="day.record">
 								<div class="status-row">
@@ -588,6 +656,36 @@
 						<p v-else class="empty">아직 저장된 체크가 없습니다.</p>
 					</div>
 				</section>
+
+				<section class="panel" v-show="activeTab === 'stats'">
+					<div class="stats-panel">
+						<div class="stats-head">
+							<h3 class="form-header">월간 성공률 통계</h3>
+							<select v-model="statsMonth">
+								<option v-for="m in statsMonthOptions" :key="m.value" :value="m.value">{{ m.label }}</option>
+							</select>
+							<span class="saved">기준 일수: {{ statsDaysInMonth }}일</span>
+						</div>
+
+						<div class="stat-group">
+							<h4><span class="dot colly"></span>콜리</h4>
+							<div class="stat-row" v-for="row in monthlyStats.colly" :key="`sc-${row.task}`">
+								<div class="stat-label">{{ row.task }}</div>
+								<div class="bar-track"><div class="bar-fill colly" :style="{ width: `${row.percent}%` }"></div></div>
+								<div class="stat-value">{{ row.percent }}%</div>
+							</div>
+						</div>
+
+						<div class="stat-group">
+							<h4><span class="dot bbaebjji"></span>뱁찌</h4>
+							<div class="stat-row" v-for="row in monthlyStats.bbaebjji" :key="`sb-${row.task}`">
+								<div class="stat-label">{{ row.task }}</div>
+								<div class="bar-track"><div class="bar-fill bbaebjji" :style="{ width: `${row.percent}%` }"></div></div>
+								<div class="stat-value">{{ row.percent }}%</div>
+							</div>
+						</div>
+					</div>
+				</section>
 			</div>
 
 			<div class="modal-backdrop" v-if="popup.open" @click.self="closePopup">
@@ -655,6 +753,7 @@
 					const draft = ref(makeEmptyRecord());
 					const saveMessage = ref("");
 					const overviewMonth = ref("all");
+					const statsMonth = ref(`${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`);
 					const isLoading = ref(false);
 					const isSaving = ref(false);
 					const popup = ref({ open: false, date: "", dateObj: null, record: null });
@@ -712,6 +811,50 @@
 							.filter((v, i, arr) => arr.indexOf(v) === i)
 							.sort((a, b) => b.localeCompare(a));
 						return keys.map((k) => ({ label: `${k.replace("-", "년 ")}월`, value: k }));
+					});
+
+					const statsMonthOptions = computed(() => {
+						const current = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
+						const keys = new Set([current, ...Object.keys(records.value).map((d) => d.slice(0, 7))]);
+						return Array.from(keys)
+							.sort((a, b) => b.localeCompare(a))
+							.map((k) => ({ label: `${k.replace("-", "년 ")}월`, value: k }));
+					});
+
+					const statsDaysInMonth = computed(() => {
+						const [yearText, monthText] = statsMonth.value.split("-");
+						const year = Number(yearText);
+						const monthIndex = Number(monthText) - 1;
+						if (!Number.isFinite(year) || !Number.isFinite(monthIndex)) return 0;
+						return new Date(year, monthIndex + 1, 0).getDate();
+					});
+
+					const monthlyStats = computed(() => {
+						const totalDays = statsDaysInMonth.value || 1;
+						const [yearText, monthText] = statsMonth.value.split("-");
+						const year = Number(yearText);
+						const monthIndex = Number(monthText) - 1;
+
+						const calcFor = (personKey) => TASKS[personKey].map((task) => {
+							let successCount = 0;
+							for (let day = 1; day <= totalDays; day += 1) {
+								const dateKey = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+								if (records.value[dateKey] && records.value[dateKey][personKey] && records.value[dateKey][personKey][task]) {
+									successCount += 1;
+								}
+							}
+							const percent = Math.round((successCount / totalDays) * 100);
+							return { task, successCount, percent };
+						});
+
+						if (!Number.isFinite(year) || !Number.isFinite(monthIndex)) {
+							return { colly: [], bbaebjji: [] };
+						}
+
+						return {
+							colly: calcFor("colly"),
+							bbaebjji: calcFor("bbaebjji")
+						};
 					});
 
 					const entries = computed(() =>
@@ -869,6 +1012,10 @@
 						calendarDays,
 						filteredEntries,
 						monthOptions,
+						statsMonth,
+						statsMonthOptions,
+						statsDaysInMonth,
+						monthlyStats,
 						overviewMonth,
 						popup,
 						changeMonth,
