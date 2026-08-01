@@ -49,13 +49,53 @@
 			}
 
 			.hero {
+				position: relative;
+				overflow: hidden;
 				border: 1px solid var(--line);
 				border-radius: 22px;
-				background: linear-gradient(130deg, rgba(255, 255, 255, 0.78), rgba(255, 255, 255, 0.92));
+				background: linear-gradient(130deg, rgba(255, 255, 255, 0.68), rgba(255, 255, 255, 0.8));
 				backdrop-filter: blur(8px);
 				padding: 20px;
 				box-shadow: 0 12px 38px rgba(68, 77, 95, 0.12);
 				animation: fade-up 0.45s ease both;
+			}
+
+			.hero::before,
+			.hero::after {
+				content: "";
+				position: absolute;
+				top: 0;
+				bottom: 0;
+				z-index: 0;
+				width: 52%;
+				opacity: 0.55;
+				background-size: cover;
+				background-position: center;
+				background-repeat: no-repeat;
+				pointer-events: none;
+			}
+
+			.hero::before {
+				left: 0;
+				background-image: url("assets/border-collie.jpg");
+				background-position: 30% center;
+			}
+
+			.hero::after {
+				right: 0;
+				background-image: url("assets/bbaebsae.jpg");
+				transform: scaleX(-1);
+				background-position: 60% center;
+			}
+
+			.hero > * {
+				position: relative;
+				z-index: 1;
+			}
+
+			.title,
+			.subtitle {
+				text-shadow: 0 2px 9px rgba(255, 255, 255, 0.65);
 			}
 
 			.title {
@@ -507,6 +547,22 @@
 			}
 
 			@media (max-width: 560px) {
+				.hero::before,
+				.hero::after {
+					width: 50%;
+					opacity: 0.5;
+				}
+
+				.hero::before {
+					left: 0;
+					background-position: 28% center;
+				}
+
+				.hero::after {
+					right: 0;
+					background-position: 70% center;
+				}
+
 				.checks {
 					grid-template-columns: 1fr;
 				}
