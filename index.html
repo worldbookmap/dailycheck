@@ -716,6 +716,18 @@
 					</div>
 				</div>
 			</div>
+
+			<div class="modal-backdrop" v-if="saveSuccessPopup.open" @click.self="closeSaveSuccessPopup">
+				<div class="modal">
+					<h3>저장 완료</h3>
+					<div class="modal-body">
+						<div>저장에 성공했습니다.</div>
+					</div>
+					<div class="modal-actions">
+						<button @click="closeSaveSuccessPopup">확인</button>
+					</div>
+				</div>
+			</div>
 		</div>
 
 		<script type="module">
@@ -725,7 +737,7 @@
 
 			const TASKS = {
 				colly: ["운동", "금주", "독서", "영어공부"],
-				bbaebjji: ["운동", "금주", "독서", "서예"]
+				bbaebjji: ["운동", "금주", "독서", "중국어"]
 			};
 
 			function makeEmptyChecklist(items) {
@@ -765,6 +777,7 @@
 					const isLoading = ref(false);
 					const isSaving = ref(false);
 					const popup = ref({ open: false, date: "", dateObj: null, record: null });
+					const saveSuccessPopup = ref({ open: false });
 					const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
 
 					const fetchRemoteRecords = async () => {
@@ -918,6 +931,7 @@
 						try {
 							await persistRemote();
 							saveMessage.value = "GitHub 저장 완료";
+							saveSuccessPopup.value.open = true;
 						} catch (error) {
 							console.error(error);
 							saveMessage.value = "저장 실패";
@@ -942,7 +956,7 @@
 							"운동": "🏃",
 							"금주": "🚫",
 							"독서": "📚",
-							"서예": "🖌️"
+							"중국어": "🇨🇳"
 						}
 					};
 
@@ -980,6 +994,10 @@
 
 					const closePopup = () => {
 						popup.value.open = false;
+					};
+
+					const closeSaveSuccessPopup = () => {
+						saveSuccessPopup.value.open = false;
 					};
 
 					const moveToRecordFromPopup = () => {
@@ -1026,6 +1044,7 @@
 						monthlyStats,
 						overviewMonth,
 						popup,
+						saveSuccessPopup,
 						changeMonth,
 						selectDate,
 						taskIconStates,
@@ -1036,6 +1055,7 @@
 						goToday,
 						openDayPopup,
 						closePopup,
+						closeSaveSuccessPopup,
 						moveToRecordFromPopup
 					};
 				}
