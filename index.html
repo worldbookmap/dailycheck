@@ -249,32 +249,53 @@
 			}
 
 			.tool-row.bottom {
-				padding: 10px 0 0;
+				display: flex;
+				justify-content: flex-end;
+				align-items: center;
+				gap: 12px;
+				padding: 14px 12px 0;
+				margin-top: 20px;
 				border-top: 1px solid #e9dcc9;
 			}
 
 			.tabs {
 				margin-top: 14px;
 				display: flex;
-				gap: 8px;
+				gap: 10px;
 				flex-wrap: wrap;
+				justify-content: center;
 			}
 
 			.tab-btn {
-				background: rgba(255, 252, 246, 0.96);
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
+				background: linear-gradient(180deg, rgba(255, 252, 246, 0.98), rgba(255, 245, 250, 0.96));
 				border: 1px solid #dcc2a4;
-				padding: 9px 15px;
+				padding: 10px 16px;
 				border-radius: 999px;
-				font-weight: 500;
+				font-weight: 800;
 				letter-spacing: 0.01em;
 				color: #7a644f;
+				box-shadow: 0 3px 0 rgba(188, 149, 150, 0.18), 0 8px 18px rgba(164, 120, 140, 0.08);
 			}
 
 			.tab-btn.active {
 				background: linear-gradient(120deg, var(--md-warm), var(--md-mint));
 				border-color: #d993b4;
 				color: #4e2f40;
-				box-shadow: 0 8px 20px rgba(162, 108, 137, 0.22);
+				box-shadow: 0 4px 0 rgba(146, 102, 122, 0.18), 0 12px 24px rgba(162, 108, 137, 0.22);
+			}
+
+			.tab-btn::before {
+				content: "";
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				border-radius: 50%;
+				background: currentColor;
+				opacity: 0.8;
 			}
 
 			button,
@@ -285,19 +306,66 @@
 
 			button {
 				border: 1px solid #d9c1a5;
-				background: var(--md-surface-strong);
+				background: linear-gradient(180deg, rgba(255,255,255,0.9), rgba(255,247,250,0.94));
 				border-radius: 12px;
 				padding: 9px 13px;
 				cursor: pointer;
 				color: var(--md-ink);
-				font-weight: 500;
-				transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease;
+				font-weight: 600;
+				box-shadow: 0 3px 0 rgba(182, 145, 124, 0.14);
+				transition: transform 0.12s ease, box-shadow 0.12s ease, border-color 0.12s ease, filter 0.12s ease;
 			}
 
 			button:hover {
 				transform: translateY(-1px);
 				border-color: #d79ab8;
-				box-shadow: 0 8px 18px rgba(125, 84, 104, 0.14);
+				box-shadow: 0 4px 0 rgba(182, 145, 124, 0.12), 0 10px 18px rgba(125, 84, 104, 0.14);
+				filter: saturate(1.04);
+			}
+
+			.tool-row.bottom .icon-action {
+				display: inline-flex;
+				align-items: center;
+				gap: 8px;
+				padding: 10px 14px;
+				border-radius: 999px;
+				border: 1px solid rgba(191, 159, 125, 0.7);
+				background: linear-gradient(135deg, rgba(255, 252, 247, 0.96), rgba(249, 239, 246, 0.9));
+				color: #5b413a;
+				font-weight: 800;
+				box-shadow: 0 4px 0 rgba(162, 133, 118, 0.18), 0 12px 20px rgba(144, 90, 107, 0.1);
+			}
+
+			.tool-row.bottom .icon-action:disabled {
+				opacity: 0.6;
+				cursor: wait;
+			}
+
+			.tool-row.bottom .action-icon {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				width: 28px;
+				height: 28px;
+				border-radius: 50%;
+				background: linear-gradient(135deg, #fff7dd, #f7dfe8);
+				border: 1px solid rgba(172, 125, 155, 0.3);
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.85);
+			}
+
+			.tool-row.bottom .action-icon svg {
+				width: 15px;
+				height: 15px;
+				stroke: currentColor;
+				fill: none;
+				stroke-width: 2;
+				stroke-linecap: round;
+				stroke-linejoin: round;
+			}
+
+			.tool-row.bottom .action-label {
+				font-size: 0.82rem;
+				letter-spacing: 0.01em;
 			}
 
 			.layout {
@@ -338,6 +406,23 @@
 				justify-content: space-between;
 				align-items: center;
 				margin-bottom: 12px;
+				padding: 6px 8px;
+				border: 1px solid rgba(217, 183, 168, 0.9);
+				border-radius: 14px;
+				background: linear-gradient(135deg, rgba(255, 247, 240, 0.96), rgba(240, 252, 247, 0.94));
+			}
+
+			.calendar-head button {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				padding: 9px 14px;
+				border-radius: 999px;
+				font-weight: 800;
+				background: linear-gradient(135deg, rgba(255,255,255,0.9), rgba(255,243,248,0.9));
+				border-color: rgba(205, 160, 180, 0.7);
+				color: #5f4050;
+				box-shadow: 0 3px 0 rgba(182, 146, 135, 0.15), 0 8px 18px rgba(141, 91, 107, 0.08);
 			}
 
 			.month-label {
@@ -571,20 +656,20 @@
 			.person-card {
 				position: relative;
 				overflow: hidden;
-				border: 1px solid #e4bfd1;
-				border-radius: 16px;
-				padding: 14px;
+				border: 1px solid rgba(218, 164, 188, 0.8);
+				border-radius: 18px;
+				padding: 14px 14px 12px;
 				margin-bottom: 10px;
-				background: linear-gradient(180deg, rgba(255, 251, 250, 0.98), rgba(255, 245, 247, 0.94));
-				box-shadow: 0 8px 20px rgba(129, 86, 110, 0.1);
+				background: linear-gradient(180deg, rgba(255, 251, 250, 0.98), rgba(255, 246, 249, 0.96));
+				box-shadow: 0 10px 22px rgba(129, 86, 110, 0.08);
 			}
 
 			.person-card::before {
 				content: "";
 				position: absolute;
 				inset: 0 0 auto 0;
-				height: 3px;
-				background: linear-gradient(90deg, rgba(224, 127, 160, 0.85), rgba(113, 185, 168, 0.78));
+				height: 4px;
+				background: linear-gradient(90deg, rgba(224, 127, 160, 0.9), rgba(113, 185, 168, 0.9));
 			}
 
 			.person-card h4 {
@@ -593,6 +678,16 @@
 				align-items: center;
 				justify-content: space-between;
 				gap: 8px;
+				font-size: 1rem;
+				line-height: 1.3;
+			}
+
+			.person-card h4 > span:first-child {
+				display: inline-flex;
+				align-items: center;
+				min-width: 0;
+				font-weight: 800;
+				color: #4f3a38;
 			}
 
 			.person-card h4 .dot {
@@ -602,6 +697,7 @@
 				border-radius: 99px;
 				vertical-align: middle;
 				margin-right: 5px;
+				flex-shrink: 0;
 			}
 
 			.dot.colly {
@@ -623,6 +719,8 @@
 				font-size: 11px;
 				font-weight: 700;
 				color: #8a5d72;
+				white-space: nowrap;
+				flex-shrink: 0;
 			}
 
 			.person-badge img {
@@ -634,17 +732,19 @@
 			.checks {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 6px 8px;
+				gap: 8px;
 			}
 
 			.check-item {
 				display: flex;
 				align-items: center;
-				gap: 6px;
+				gap: 8px;
+				width: 100%;
+				min-width: 0;
 				background: rgba(255, 255, 255, 0.96);
 				border: 1px solid #ead2de;
-				border-radius: 10px;
-				padding: 7px 8px;
+				border-radius: 12px;
+				padding: 8px 10px;
 				transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
 			}
 
@@ -659,6 +759,15 @@
 				background: linear-gradient(120deg, rgba(255, 237, 245, 0.98), rgba(241, 255, 249, 0.95));
 			}
 
+			.check-item span {
+				flex: 1 1 auto;
+				min-width: 0;
+				font-weight: 600;
+				color: #604a47;
+				white-space: nowrap;
+				overflow: hidden;
+				text-overflow: ellipsis;
+			}
 
 			.check-item input {
 				appearance: none;
@@ -712,15 +821,33 @@
 			}
 
 			.save-btn {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				gap: 8px;
 				background: linear-gradient(120deg, #f3a8c8, #9fd9c3);
 				border-color: #d78ead;
 				color: #4f3140;
-				font-weight: 700;
+				font-weight: 900;
+				padding: 11px 18px;
+				border-radius: 999px;
+				box-shadow: 0 4px 0 rgba(147, 102, 118, 0.18), 0 12px 22px rgba(141, 96, 119, 0.15);
+			}
+
+			.save-btn::before {
+				content: "";
+				display: inline-block;
+				width: 16px;
+				height: 16px;
+				background: currentColor;
+				mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5 9.2 16.7 19 6.9' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
+				-webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'%3E%3Cpath d='M5 12.5 9.2 16.7 19 6.9' fill='none' stroke='white' stroke-width='2.2' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E") center/contain no-repeat;
 			}
 
 			.save-btn:hover {
 				border-color: #cd7f9f;
-				box-shadow: 0 10px 20px rgba(141, 96, 119, 0.2);
+				box-shadow: 0 12px 22px rgba(141, 96, 119, 0.2);
+				transform: translateY(-1px);
 			}
 
 			.record-grid {
@@ -812,83 +939,231 @@
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				gap: 10px;
+				gap: 12px;
 				margin-bottom: 10px;
-				padding-bottom: 8px;
+				padding: 8px 10px 10px;
 				border-bottom: 1px dashed #e2ceb5;
 			}
 
 			.month-ctl strong {
 				font-size: 14px;
 				letter-spacing: 0.01em;
+				color: #634d3d;
 			}
 
 			.select-wrap {
 				position: relative;
 				display: inline-flex;
 				align-items: center;
-				min-width: 162px;
+				min-width: 182px;
+				filter: drop-shadow(0 6px 12px rgba(140, 95, 74, 0.08));
 			}
 
-			.select-wrap::after {
-				content: "▾";
-				position: absolute;
-				right: 11px;
-				top: 50%;
-				transform: translateY(-50%);
-				font-size: 12px;
-				color: #8b6a50;
-				pointer-events: none;
+			.stats-select-wrap,
+			.custom-select-wrap {
+				position: relative;
+				min-width: 220px;
+				width: 220px;
+				overflow: visible;
+				z-index: 10;
 			}
 
-			.select-wrap select {
-				appearance: none;
-				-webkit-appearance: none;
+			.custom-select,
+			.stats-select {
+				position: relative;
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
 				width: 100%;
-				padding: 8px 34px 8px 12px;
-				border-radius: 11px;
-				border: 1px solid #d9c0a3;
-				background: linear-gradient(180deg, rgba(255, 253, 249, 0.98), rgba(255, 247, 236, 0.98));
+				padding: 10px 36px 10px 26px;
+				border-radius: 999px;
+				border: 1px solid rgba(203, 170, 147, 0.95);
+				background: linear-gradient(180deg, rgba(255, 253, 250, 0.98), rgba(255, 243, 246, 0.96));
 				color: #5a4434;
-				font-size: 13px;
-				font-weight: 600;
+				font-size: 12px;
+				font-weight: 700;
 				cursor: pointer;
-				box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.66);
-				transition: border-color 0.14s ease, box-shadow 0.14s ease;
+				box-shadow: inset 0 -1px 0 rgba(255, 255, 255, 0.76), 0 6px 12px rgba(165, 112, 128, 0.06);
+				transition: border-color 0.14s ease, box-shadow 0.14s ease, transform 0.12s ease;
 			}
 
-			.select-wrap select:hover {
+			.custom-select::before,
+			.stats-select::before {
+				content: "";
+				position: absolute;
+				left: 12px;
+				top: 50%;
+				width: 5px;
+				height: 5px;
+				transform: translateY(-50%);
+				border-radius: 50%;
+				background: linear-gradient(135deg, #f4b9ca, #9dd8c1);
+				box-shadow: 0 0 0 1px rgba(255, 255, 255, 0.8);
+				opacity: 0.85;
+			}
+
+			.custom-select:hover,
+			.stats-select:hover {
 				border-color: #cda57d;
+				transform: translateY(-1px);
 			}
 
-			.select-wrap select:focus {
+			.custom-select:focus,
+			.stats-select:focus {
 				outline: none;
-				border-color: #b98957;
-				box-shadow: 0 0 0 3px rgba(209, 162, 112, 0.22);
+				border-color: #b98a6a;
+				box-shadow: 0 0 0 3px rgba(220, 169, 128, 0.22), 0 8px 16px rgba(165, 112, 128, 0.08);
+			}
+
+			.custom-select__label,
+			.stats-select__label {
+				flex: 1 1 auto;
+				text-align: left;
+				line-height: 1.2;
+				font-size: 11.5px;
+				letter-spacing: 0.01em;
+			}
+
+			.custom-select__chevron,
+			.stats-select__chevron {
+				display: inline-flex;
+				align-items: center;
+				justify-content: center;
+				font-size: 12px;
+				color: #745a48;
+				margin-left: 8px;
+				transition: transform 0.16s ease;
+			}
+
+			.custom-select-wrap.is-open .custom-select__chevron,
+			.stats-select-wrap.is-open .stats-select__chevron {
+				transform: rotate(180deg);
+			}
+
+			.custom-select__panel,
+			.stats-select__panel {
+				position: absolute;
+				top: calc(100% + 10px);
+				left: 0;
+				right: 0;
+				z-index: 40;
+				display: grid;
+				gap: 5px;
+				padding: 7px;
+				border-radius: 22px;
+				border: 1px solid rgba(214, 175, 145, 0.95);
+				background: linear-gradient(180deg, rgba(255, 253, 251, 0.995), rgba(255, 246, 249, 0.985));
+				box-shadow: 0 16px 30px rgba(129, 89, 102, 0.14), 0 8px 14px rgba(134, 106, 90, 0.08), 0 0 0 1px rgba(255,255,255,0.35);
+				animation: custom-select-pop 0.22s cubic-bezier(0.2, 0.8, 0.2, 1);
+				transform-origin: top center;
+				max-height: 320px;
+				overflow-y: auto;
+			}
+
+			@keyframes custom-select-pop {
+				from {
+					opacity: 0;
+					transform: translateY(-8px) scale(0.97);
+					filter: blur(2px);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0) scale(1);
+					filter: blur(0);
+				}
+			}
+
+			.custom-option,
+			.stats-option {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				width: 100%;
+				text-align: left;
+				padding: 9px 10px;
+				border: 1px solid transparent;
+				border-radius: 10px;
+				background: transparent;
+				color: #58463c;
+				font-size: 11.5px;
+				font-weight: 700;
+				letter-spacing: 0.01em;
+				transition: background 0.12s ease, border-color 0.12s ease, transform 0.12s ease, box-shadow 0.12s ease;
+			}
+
+			.custom-option::after,
+			.stats-option::after {
+				content: "";
+				display: inline-block;
+				width: 6px;
+				height: 6px;
+				border-radius: 50%;
+				background: transparent;
+				border: 1px solid rgba(103, 86, 74, 0.28);
+				margin-left: 8px;
+				flex-shrink: 0;
+				transition: all 0.12s ease;
+			}
+
+			.custom-option:hover,
+			.stats-option:hover {
+				background: rgba(249, 236, 242, 0.8);
+				border-color: rgba(214, 154, 175, 0.5);
+			}
+
+			.custom-option.active,
+			.stats-option.active {
+				background: linear-gradient(135deg, rgba(249, 227, 234, 0.9), rgba(221, 245, 234, 0.9));
+				border-color: rgba(214, 154, 175, 0.7);
+				box-shadow: inset 0 0 0 1px rgba(255,255,255,0.44);
+			}
+
+			.custom-option.active::after,
+			.stats-option.active::after {
+				background: linear-gradient(135deg, #f5b2c8, #90d7be);
+				border-color: transparent;
+				box-shadow: 0 0 0 2px rgba(255, 255, 255, 0.66);
 			}
 
 			.stats-panel {
-				--stats-gap: 14px;
+				--stats-gap: 16px;
 				display: grid;
 				gap: var(--stats-gap);
+				align-items: start;
+				padding: 2px 0;
+				color: #4d3c3b;
 			}
 
 			.grape-progress {
+				position: relative;
+				overflow: hidden;
 				display: grid;
 				grid-template-columns: minmax(180px, 280px) 1fr;
 				align-items: center;
-				gap: 24px;
-				padding: 16px 20px;
+				gap: 20px;
+				padding: 16px 18px;
+				min-height: 226px;
 				border: 1px solid #d9c2a4;
-				border-radius: 16px;
-				background: linear-gradient(135deg, rgba(255, 247, 236, 0.96), rgba(237, 250, 243, 0.9));
-				box-shadow: 0 12px 30px rgba(95, 72, 46, 0.12);
+				border-radius: 20px;
+				background:
+					linear-gradient(135deg, rgba(255, 250, 242, 0.98), rgba(235, 250, 244, 0.96)),
+					radial-gradient(circle at 12% 8%, rgba(255, 255, 255, 0.94), transparent 34%);
+				box-shadow: 0 14px 28px rgba(95, 72, 46, 0.13), inset 0 1px 0 rgba(255,255,255,0.9);
+			}
+
+			.grape-progress::before {
+				content: "";
+				position: absolute;
+				inset: 10px;
+				border: 1px solid rgba(255, 255, 255, 0.48);
+				border-radius: 14px;
+				pointer-events: none;
 			}
 
 			.grape-art {
 				position: relative;
 				width: min(100%, 280px);
-				aspect-ratio: 525 / 635;
+				aspect-ratio: 602 / 640;
 				margin: 0 auto;
 			}
 
@@ -901,7 +1176,7 @@
 
 			.grape-fill {
 				position: absolute;
-				width: 8.1%;
+				width: 7.8%;
 				aspect-ratio: 1;
 				transform: translate(-50%, -50%) scale(0.72);
 				border: 1px solid rgba(255, 255, 255, 0.9);
@@ -926,28 +1201,38 @@
 			}
 
 			.grape-progress__copy {
+				position: relative;
+				z-index: 1;
 				display: grid;
-				gap: 8px;
+				gap: 9px;
+				align-content: center;
+				max-width: 360px;
 			}
 
 			.grape-progress__copy h3 {
 				margin: 0;
 				font-family: "Bagel Fat One", "Gowun Dodum", sans-serif;
-				font-size: 24px;
+				font-size: 22px;
 				font-weight: 400;
-				color: #704b5d;
+				letter-spacing: 0.01em;
+				color: #684659;
 			}
 
 			.grape-progress__copy p {
 				margin: 0;
-				color: #8d6a7a;
-				line-height: 1.6;
+				font-size: 12px;
+				color: #856b79;
+				line-height: 1.65;
 			}
 
 			.grape-progress__count {
-				font-size: 30px;
+				margin-top: 3px;
+				font-family: Georgia, "Times New Roman", serif;
+				font-size: 34px;
 				font-weight: 700;
-				color: #6b3f58;
+				line-height: 1;
+				letter-spacing: -0.02em;
+				color: #623c55;
 			}
 
 			.grape-progress__legend {
@@ -955,7 +1240,9 @@
 				flex-wrap: wrap;
 				gap: 8px 14px;
 				margin-top: 4px;
-				font-size: 13px;
+				font-size: 11px;
+				font-weight: 600;
+				letter-spacing: 0.02em;
 				color: #806575;
 			}
 
@@ -979,19 +1266,29 @@
 
 			.stats-head {
 				position: relative;
-				overflow: hidden;
-				display: flex;
-				flex-wrap: wrap;
+				overflow: visible;
+				display: grid;
+				grid-template-columns: minmax(0, 1fr) auto auto;
 				align-items: center;
 				gap: 12px;
-				padding: 14px 16px;
+				padding: 16px 18px;
 				border: 1px solid #d9c2a4;
-				border-radius: 16px;
+				border-radius: 18px;
 				background:
-					linear-gradient(110deg, rgba(255, 246, 231, 0.9), rgba(235, 249, 241, 0.84)),
+					linear-gradient(110deg, rgba(255, 249, 239, 0.96), rgba(234, 249, 241, 0.92)),
 					radial-gradient(circle at 22% 16%, rgba(255, 237, 208, 0.76), transparent 32%),
 					radial-gradient(circle at 84% 88%, rgba(200, 233, 216, 0.58), transparent 30%);
-				box-shadow: 0 12px 30px rgba(95, 72, 46, 0.14);
+				box-shadow: 0 14px 28px rgba(95, 72, 46, 0.13), inset 0 1px 0 rgba(255,255,255,0.85);
+			}
+
+			.stats-head .form-header {
+				margin: 0;
+				padding-right: 8px;
+				font-family: "Bagel Fat One", "Gowun Dodum", sans-serif;
+				font-size: 20px;
+				font-weight: 400;
+				letter-spacing: 0.01em;
+				color: #654b4c;
 			}
 
 			.stats-head::before,
@@ -1031,27 +1328,37 @@
 			}
 
 			.stats-head .saved {
-				margin-left: auto;
+				margin-left: 0;
 				padding: 5px 10px;
 				border-radius: 999px;
 				background: rgba(255, 251, 245, 0.88);
 				border: 1px solid #dcc4a6;
+				font-size: 11px;
+				font-weight: 600;
+				color: #856d5e;
+				white-space: nowrap;
+				justify-self: end;
 			}
 
 			.stats-kpis {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 				gap: var(--stats-gap);
+				align-items: stretch;
 			}
 
 			.kpi-card {
 				position: relative;
 				overflow: hidden;
-				border: 1px solid #ddc6a9;
-				border-radius: 14px;
-				padding: 12px;
-				background: rgba(255, 252, 247, 0.92);
-				box-shadow: 0 7px 20px rgba(92, 68, 42, 0.09);
+				display: flex;
+				flex-direction: column;
+				justify-content: center;
+				border: 1px solid rgba(214, 190, 164, 0.92);
+				border-radius: 16px;
+				padding: 14px 16px;
+				min-height: 130px;
+				background: linear-gradient(145deg, rgba(255, 254, 250, 0.98), rgba(249, 244, 237, 0.94));
+				box-shadow: 0 12px 24px rgba(92, 68, 42, 0.1), inset 0 1px 0 rgba(255,255,255,0.9);
 			}
 
 			.kpi-card::after {
@@ -1074,22 +1381,26 @@
 
 			.kpi-title {
 				margin: 0;
-				font-size: 13px;
+				font-size: 12px;
 				font-weight: 700;
+				letter-spacing: 0.02em;
 				color: #6f5946;
 			}
 
 			.kpi-percent {
-				margin-top: 6px;
-				font-size: 28px;
+				margin-top: 8px;
+				font-family: Georgia, "Times New Roman", serif;
+				font-size: 32px;
 				font-weight: 700;
-				letter-spacing: 0.02em;
+				line-height: 1;
+				letter-spacing: -0.02em;
 				color: #3f3127;
 			}
 
 			.kpi-meta {
 				margin-top: 4px;
-				font-size: 12px;
+				font-size: 11px;
+				letter-spacing: 0.02em;
 				color: var(--md-muted);
 			}
 
@@ -1101,22 +1412,26 @@
 
 			.stat-group {
 				border: 1px solid #ddc4a7;
-				border-radius: 14px;
-				padding: 14px;
-				background: rgba(255, 251, 245, 0.92);
-				box-shadow: 0 8px 20px rgba(94, 69, 43, 0.08);
+				border-radius: 16px;
+				padding: 16px;
+				background: linear-gradient(145deg, rgba(255, 253, 249, 0.98), rgba(248, 244, 237, 0.94));
+				box-shadow: 0 12px 24px rgba(94, 69, 43, 0.09), inset 0 1px 0 rgba(255,255,255,0.85);
 			}
 
 			.stat-head {
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-bottom: 10px;
+				margin-bottom: 12px;
 			}
 
 			.stat-group h4 {
 				margin: 0;
-				font-size: 16px;
+				font-family: "Bagel Fat One", "Gowun Dodum", sans-serif;
+				font-size: 17px;
+				font-weight: 400;
+				letter-spacing: 0.01em;
+				color: #5c4641;
 			}
 
 			.best-chip {
@@ -1137,7 +1452,7 @@
 				grid-template-columns: 84px 1fr 76px;
 				gap: 10px;
 				align-items: center;
-				margin: 7px 0;
+				margin: 8px 0;
 			}
 
 			.stat-label {
@@ -1413,7 +1728,23 @@
 				}
 
 				.stats-head {
+					grid-template-columns: 1fr;
 					padding: 12px;
+				}
+
+				.stats-head .form-header {
+					padding-right: 0;
+					font-size: 19px;
+					white-space: nowrap;
+				}
+
+				.stats-head .stats-select-wrap {
+					width: 100%;
+					min-width: 0;
+				}
+
+				.stats-head .saved {
+					justify-self: start;
 				}
 
 				.stats-head::before,
@@ -1563,11 +1894,15 @@
 					<div class="overview">
 						<div class="month-ctl">
 							<strong>전체보기</strong>
-							<div class="select-wrap">
-								<select v-model="overviewMonth">
-									<option value="all">전체 월</option>
-									<option v-for="m in monthOptions" :key="m.value" :value="m.value">{{ m.label }}</option>
-								</select>
+							<div class="custom-select-wrap" :class="{ 'is-open': monthMenuOpen }" @click.stop>
+								<button type="button" class="custom-select" @click.stop="monthMenuOpen = !monthMenuOpen" aria-label="월 선택">
+									<span class="custom-select__label">{{ selectedMonthLabel }}</span>
+									<span class="custom-select__chevron" aria-hidden="true">▾</span>
+								</button>
+								<div v-if="monthMenuOpen" class="custom-select__panel">
+									<button type="button" class="custom-option" :class="{ active: overviewMonth === 'all' }" @click="selectOverviewMonth('all')">전체 월</button>
+									<button type="button" class="custom-option" v-for="m in monthOptions" :key="m.value" :class="{ active: overviewMonth === m.value }" @click="selectOverviewMonth(m.value)">{{ m.label }}</button>
+								</div>
 							</div>
 						</div>
 
@@ -1595,17 +1930,21 @@
 					<div class="stats-panel">
 						<div class="stats-head">
 							<h3 class="form-header">월간 성공률 통계</h3>
-							<div class="select-wrap">
-								<select v-model="statsMonth">
-									<option v-for="m in statsMonthOptions" :key="m.value" :value="m.value">{{ m.label }}</option>
-								</select>
+							<div class="stats-select-wrap" :class="{ 'is-open': statsMonthMenuOpen }" @click.stop>
+								<button type="button" class="stats-select" @click.stop="statsMonthMenuOpen = !statsMonthMenuOpen" aria-label="통계 월 선택">
+									<span class="stats-select__label">{{ statsMonthLabel }}</span>
+									<span class="stats-select__chevron" aria-hidden="true">▾</span>
+								</button>
+								<div v-if="statsMonthMenuOpen" class="stats-select__panel">
+									<button type="button" class="stats-option" v-for="m in statsMonthOptions" :key="m.value" :class="{ active: statsMonth === m.value }" @click="selectStatsMonth(m.value)">{{ m.label }}</button>
+								</div>
 							</div>
 							<span class="saved">기준 일수: {{ statsDaysInMonth }}일</span>
 						</div>
 
 						<div class="grape-progress">
 							<div class="grape-art" aria-label="월간 완주 포도 진행도">
-								<img class="grape-art__image" src="assets/bgGrape.jpg" alt="포도 송이" />
+								<img class="grape-art__image" src="assets/bgGrape01.jpeg" alt="포도 송이" />
 								<span
 									v-for="(position, idx) in grapePositions"
 									:key="`grape-${idx}`"
@@ -1669,9 +2008,24 @@
 			</div>
 
 			<div class="tool-row bottom">
-				<button @click="refreshFromGitHub" :disabled="isLoading">GitHub 새로고침</button>
-				<button @click="downloadJson">JSON 내보내기</button>
-				<button @click="goToday">오늘로 이동</button>
+				<button class="icon-action" @click="refreshFromGitHub" :disabled="isLoading" title="GitHub 새로고침" aria-label="GitHub 새로고침">
+					<span class="action-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24"><path d="M20 12a8 8 0 1 1-2.34-5.66M20 4v6h-6"/></svg>
+					</span>
+					<span class="action-label">새로고침</span>
+				</button>
+				<button class="icon-action" @click="downloadJson" title="JSON 내보내기" aria-label="JSON 내보내기">
+					<span class="action-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24"><path d="M12 3v10"/><path d="M8.5 19.5 12 23l3.5-3.5"/><path d="M4 15v1a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-1"/></svg>
+					</span>
+					<span class="action-label">내보내기</span>
+				</button>
+				<button class="icon-action" @click="goToday" title="오늘로 이동" aria-label="오늘로 이동">
+					<span class="action-icon" aria-hidden="true">
+						<svg viewBox="0 0 24 24"><path d="M8 2v3"/><path d="M16 2v3"/><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18"/><path d="M12 13.5v4.5"/><path d="M9.5 16h5"/></svg>
+					</span>
+					<span class="action-label">오늘</span>
+				</button>
 				<span class="saved" v-if="isLoading">불러오는 중...</span>
 			</div>
 
@@ -1788,7 +2142,7 @@
 		</script>
 
 		<script type="module">
-			import { createApp, computed, ref, watch } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
+			import { createApp, computed, onMounted, onUnmounted, ref, watch } from "https://unpkg.com/vue@3/dist/vue.esm-browser.prod.js";
 
 			const API_ENDPOINT = "/api/records";
 			const DATA_FILE_ENDPOINT = "data/dailycheck-data.json";
@@ -1806,18 +2160,16 @@
 			};
 
 			const GRAPE_POSITIONS = [
-				...[[30.5, 23], [39, 23], [47, 23], [55, 23], [63, 23], [71, 23]],
-				...[[26.5, 29], [35, 29], [43, 29], [51.5, 29], [60, 29], [68, 29], [76, 29]],
-				...[[22.5, 35.5], [30.5, 35.5], [39, 35.5], [47, 35.5], [55, 35.5], [63, 35.5], [71, 35.5], [79, 35.5]],
-				...[[26, 42], [34.5, 42], [43, 42], [51, 42], [59, 42], [67, 42], [75, 42]],
-				...[[22, 48], [30, 48], [38.5, 48], [46, 48], [54, 48], [62, 48], [70, 48], [78, 48]],
-				...[[26, 54.5], [34, 54.5], [42, 54.5], [50, 54.5], [58, 54.5], [66, 54.5], [74, 54.5]],
-				...[[22, 61], [30, 61], [38, 61], [46, 61], [54, 61], [62, 61], [70, 61]],
-				...[[26, 67], [34, 67], [42, 67], [50, 67], [58, 67], [66, 67]],
-				...[[30, 73], [38, 73], [46, 73], [54, 73], [62, 73]],
-				...[[34, 79], [42, 79], [50, 79], [58, 79]],
-				...[[38, 85], [46, 85], [54, 85]],
-				...[[42, 91], [50, 91]],
+				...[[22.5, 24.8], [30.6, 24.8], [39, 24.8], [47.3, 24.8], [55.6, 24.8], [63.9, 24.8], [72.3, 24.8]],
+				...[[18.3, 32.5], [26.6, 32.5], [34.9, 32.5], [43.2, 32.5], [51.5, 32.5], [59.8, 32.5], [68.1, 32.5], [76.4, 32.5]],
+				...[[15.9, 40.6], [24.1, 40.6], [32.2, 40.6], [40.4, 40.6], [48.5, 40.6], [56.5, 40.6], [64.6, 40.6], [72.8, 40.6], [80.9, 40.6]],
+				...[[20.1, 48.3], [28.4, 48.3], [36.5, 48.3], [44.7, 48.3], [52.8, 48.3], [60.9, 48.3], [69.1, 48.3], [77.2, 48.3]],
+				...[[24.1, 56], [32.2, 56], [40.4, 56], [48.5, 56], [56.6, 56], [64.8, 56], [72.9, 56]],
+				...[[28.2, 63.8], [36.5, 63.8], [44.7, 63.8], [52.8, 63.8], [60.9, 63.8], [69.1, 63.8]],
+				...[[32.4, 71.4], [40.5, 71.4], [48.7, 71.4], [56.8, 71.4], [64.9, 71.4]],
+				...[[36.4, 79.1], [44.7, 79.1], [52.7, 79.1], [60.8, 79.1]],
+				...[[40.9, 86.7], [48.8, 86.7], [57, 86.7]],
+				...[[44.9, 94.4], [52.9, 94.4]],
 				...[[50, 97]]
 			].map(([x, y]) => ({ x, y }));
 
@@ -1922,6 +2274,8 @@
 					const showOpening = ref(true);
 					const popup = ref({ open: false, date: "", dateObj: null, record: null });
 					const saveSuccessPopup = ref({ open: false });
+					const monthMenuOpen = ref(false);
+					const statsMonthMenuOpen = ref(false);
 					const weekdays = ["일", "월", "화", "수", "목", "금", "토"];
 
 					const finishOpening = () => {
@@ -2039,12 +2393,21 @@
 						return keys.map((k) => ({ label: `${k.replace("-", "년 ")}월`, value: k }));
 					});
 
+					const selectedMonthLabel = computed(() => {
+						if (overviewMonth.value === "all") return "전체 월";
+						return monthOptions.value.find((m) => m.value === overviewMonth.value)?.label || "전체 월";
+					});
+
 					const statsMonthOptions = computed(() => {
 						const current = `${today.getFullYear()}-${String(today.getMonth() + 1).padStart(2, "0")}`;
 						const keys = new Set([current, ...Object.keys(records.value).map((d) => d.slice(0, 7))]);
 						return Array.from(keys)
 							.sort((a, b) => b.localeCompare(a))
 							.map((k) => ({ label: `${k.replace("-", "년 ")}월`, value: k }));
+					});
+
+					const statsMonthLabel = computed(() => {
+						return statsMonthOptions.value.find((m) => m.value === statsMonth.value)?.label || statsMonthOptions.value[0]?.label || "월 선택";
 					});
 
 					const statsDaysInMonth = computed(() => {
@@ -2274,7 +2637,34 @@
 						URL.revokeObjectURL(url);
 					};
 
+					const selectOverviewMonth = (value) => {
+						overviewMonth.value = value;
+						monthMenuOpen.value = false;
+					};
+
+					const selectStatsMonth = (value) => {
+						statsMonth.value = value;
+						statsMonthMenuOpen.value = false;
+					};
+
+					const closeMonthMenu = (event) => {
+						const overviewWrapper = document.querySelector(".custom-select-wrap");
+						if (overviewWrapper && overviewWrapper.contains(event.target)) return;
+						const statsWrapper = document.querySelector(".stats-select-wrap");
+						if (statsWrapper && statsWrapper.contains(event.target)) return;
+						monthMenuOpen.value = false;
+						statsMonthMenuOpen.value = false;
+					};
+
 					watch(selectedDate, (date) => loadDraftForDate(date), { immediate: true });
+
+					onMounted(() => {
+						document.addEventListener("click", closeMonthMenu);
+					});
+
+					onUnmounted(() => {
+						document.removeEventListener("click", closeMonthMenu);
+					});
 
 					refreshFromGitHub();
 
@@ -2293,8 +2683,12 @@
 						calendarDays,
 						filteredEntries,
 						monthOptions,
+						selectedMonthLabel,
+						monthMenuOpen,
 						statsMonth,
+						statsMonthMenuOpen,
 						statsMonthOptions,
+						statsMonthLabel,
 						statsDaysInMonth,
 						monthlyStats,
 						grapePositions: GRAPE_POSITIONS,
@@ -2311,6 +2705,8 @@
 						personAveragePercent,
 						personTotalSuccess,
 						bestTask,
+						selectOverviewMonth,
+						selectStatsMonth,
 						saveSelectedDate,
 						refreshFromGitHub,
 						downloadJson,
