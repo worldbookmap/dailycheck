@@ -656,12 +656,17 @@
 			.person-card {
 				position: relative;
 				overflow: hidden;
-				border: 1px solid rgba(218, 164, 188, 0.8);
-				border-radius: 18px;
-				padding: 14px 14px 12px;
-				margin-bottom: 10px;
-				background: linear-gradient(180deg, rgba(255, 251, 250, 0.98), rgba(255, 246, 249, 0.96));
-				box-shadow: 0 10px 22px rgba(129, 86, 110, 0.08);
+				border: 1px solid rgba(224, 176, 195, 0.86);
+				border-radius: 16px;
+				padding: 17px 16px 16px;
+				margin-bottom: 0;
+				background: linear-gradient(145deg, rgba(255, 254, 252, 0.99), rgba(255, 242, 247, 0.96));
+				box-shadow: 0 14px 28px rgba(129, 86, 110, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.92);
+			}
+
+			.person-card:nth-child(2) {
+				border-color: rgba(141, 204, 181, 0.82);
+				background: linear-gradient(145deg, rgba(254, 255, 253, 0.99), rgba(235, 255, 247, 0.97));
 			}
 
 			.person-card::before {
@@ -669,7 +674,11 @@
 				position: absolute;
 				inset: 0 0 auto 0;
 				height: 4px;
-				background: linear-gradient(90deg, rgba(224, 127, 160, 0.9), rgba(113, 185, 168, 0.9));
+				background: linear-gradient(90deg, #ec91b6, #ffc1d5);
+			}
+
+			.person-card:nth-child(2)::before {
+				background: linear-gradient(90deg, #63c7a6, #a4ead1);
 			}
 
 			.person-card h4 {
@@ -715,7 +724,7 @@
 				padding: 4px 8px;
 				border-radius: 999px;
 				border: 1px solid #e6c6d7;
-				background: rgba(255, 255, 255, 0.95);
+				background: rgba(255, 255, 255, 0.82);
 				font-size: 11px;
 				font-weight: 700;
 				color: #8a5d72;
@@ -743,9 +752,10 @@
 				min-width: 0;
 				background: rgba(255, 255, 255, 0.96);
 				border: 1px solid #ead2de;
-				border-radius: 12px;
-				padding: 8px 10px;
-				transition: transform 0.12s ease, border-color 0.12s ease, box-shadow 0.12s ease;
+				border-radius: 10px;
+				padding: 10px 11px;
+				cursor: pointer;
+				transition: transform 0.16s ease, border-color 0.16s ease, box-shadow 0.16s ease, background 0.16s ease;
 			}
 
 			.check-item:hover {
@@ -757,6 +767,12 @@
 			.check-item:has(input:checked) {
 				border-color: #d982aa;
 				background: linear-gradient(120deg, rgba(255, 237, 245, 0.98), rgba(241, 255, 249, 0.95));
+				box-shadow: inset 3px 0 0 #ed99bb;
+			}
+
+			.person-card:nth-child(2) .check-item:has(input:checked) {
+				border-color: #7ccccf;
+				box-shadow: inset 3px 0 0 #62c7a6;
 			}
 
 			.check-item span {
@@ -813,11 +829,12 @@
 				display: flex;
 				justify-content: space-between;
 				align-items: center;
-				margin-top: 12px;
-				padding: 10px 12px;
-				border: 1px solid #e6c8d7;
-				border-radius: 12px;
-				background: linear-gradient(120deg, rgba(255, 247, 250, 0.96), rgba(243, 255, 250, 0.92));
+				margin-top: 14px;
+				padding: 12px 14px;
+				border: 1px solid rgba(226, 191, 208, 0.9);
+				border-radius: 14px;
+				background: linear-gradient(120deg, rgba(255, 247, 250, 0.98), rgba(239, 255, 248, 0.94));
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 			}
 
 			.save-btn {
@@ -829,7 +846,8 @@
 				border-color: #d78ead;
 				color: #4f3140;
 				font-weight: 900;
-				padding: 11px 18px;
+				min-height: 42px;
+				padding: 11px 20px;
 				border-radius: 999px;
 				box-shadow: 0 4px 0 rgba(147, 102, 118, 0.18), 0 12px 22px rgba(141, 96, 119, 0.15);
 			}
@@ -853,18 +871,19 @@
 			.record-grid {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 12px;
+				gap: 14px;
 			}
 
 			.record-head {
 				display: flex;
 				align-items: center;
 				justify-content: space-between;
-				margin-bottom: 12px;
-				padding: 10px 12px;
-				border: 1px solid #e6c8d7;
-				border-radius: 13px;
-				background: linear-gradient(110deg, rgba(255, 245, 249, 0.95), rgba(238, 252, 246, 0.9));
+				margin-bottom: 14px;
+				padding: 13px 14px;
+				border: 1px solid rgba(230, 200, 215, 0.9);
+				border-radius: 14px;
+				background: linear-gradient(110deg, rgba(255, 245, 249, 0.97), rgba(238, 252, 246, 0.94));
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9);
 			}
 
 			.record-tag {
@@ -886,48 +905,88 @@
 			}
 
 			.overview {
-				margin-top: 14px;
-				max-height: 320px;
+				margin-top: 16px;
+				max-height: 360px;
 				overflow: auto;
-				padding: 12px;
-				border: 1px solid #dfc8ac;
-				border-radius: 14px;
-				background: linear-gradient(180deg, rgba(255, 251, 245, 0.96), rgba(255, 247, 238, 0.92));
-				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.7), 0 6px 16px rgba(93, 69, 44, 0.08);
-				scrollbar-color: #c9a885 rgba(255, 244, 231, 0.7);
+				padding: 14px;
+				border: 1px solid rgba(222, 195, 181, 0.9);
+				border-radius: 16px;
+				background: linear-gradient(145deg, rgba(255, 253, 250, 0.98), rgba(255, 247, 241, 0.96));
+				box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.9), 0 14px 26px rgba(117, 83, 66, 0.08);
+				scrollbar-color: #d1ad91 rgba(255, 244, 235, 0.7);
 			}
 
 			.overview table {
 				width: 100%;
-				border-collapse: collapse;
+				border-collapse: separate;
+				border-spacing: 0 6px;
 				font-size: 13px;
-				border-radius: 10px;
-				overflow: hidden;
 			}
 
 			.overview thead th {
 				position: sticky;
 				top: -1px;
 				z-index: 1;
-				background: #fff4e5;
-				color: #6d523d;
-				font-weight: 700;
+				padding: 8px 10px;
+				background: rgba(247, 232, 219, 0.72);
+				color: #765442;
+				font-size: 11px;
+				font-weight: 800;
+				letter-spacing: 0.05em;
+				text-transform: uppercase;
+			}
+
+			.overview thead th:first-child {
+				border-radius: 9px 0 0 9px;
+			}
+
+			.overview thead th:last-child {
+				border-radius: 0 9px 9px 0;
 			}
 
 			.overview th,
 			.overview td {
-				border-bottom: 1px solid #e5d3bf;
 				text-align: left;
-				vertical-align: top;
-				padding: 6px;
+				vertical-align: middle;
+				padding: 9px 10px;
 			}
 
-			.overview tbody tr:nth-child(even) {
-				background: rgba(255, 252, 247, 0.74);
+			.overview tbody td {
+				border-top: 1px solid rgba(232, 215, 202, 0.82);
+				border-bottom: 1px solid rgba(232, 215, 202, 0.82);
+				background: rgba(255, 255, 255, 0.58);
+				color: #624c43;
 			}
 
-			.overview tbody tr:hover {
-				background: rgba(248, 236, 218, 0.65);
+			.overview tbody td:first-child {
+				border-left: 1px solid rgba(232, 215, 202, 0.82);
+				border-radius: 10px 0 0 10px;
+			}
+
+			.overview tbody td:last-child {
+				border-right: 1px solid rgba(232, 215, 202, 0.82);
+				border-radius: 0 10px 10px 0;
+			}
+
+			.overview tbody tr:hover td {
+				border-color: rgba(218, 178, 192, 0.9);
+				background: linear-gradient(100deg, rgba(255, 242, 247, 0.9), rgba(240, 255, 249, 0.86));
+			}
+
+			.overview .record-date {
+				width: 126px;
+				color: #755144;
+				font-weight: 800;
+				font-variant-numeric: tabular-nums;
+				white-space: nowrap;
+			}
+
+			.overview .record-colly {
+				color: #a44c76;
+			}
+
+			.overview .record-bbaebjji {
+				color: #27846b;
 			}
 
 			.empty {
@@ -940,15 +999,15 @@
 				align-items: center;
 				justify-content: space-between;
 				gap: 12px;
-				margin-bottom: 10px;
-				padding: 8px 10px 10px;
-				border-bottom: 1px dashed #e2ceb5;
+				margin-bottom: 8px;
+				padding: 2px 2px 12px;
+				border-bottom: 1px dashed rgba(210, 177, 157, 0.72);
 			}
 
 			.month-ctl strong {
-				font-size: 14px;
-				letter-spacing: 0.01em;
-				color: #634d3d;
+				font-size: 15px;
+				letter-spacing: 0;
+				color: #5f473c;
 			}
 
 			.select-wrap {
@@ -1985,10 +2044,10 @@
 								<span class="person-badge"><img src="https://cdn-icons-png.flaticon.com/512/616/616408.png" alt="" /> focus</span>
 							</h4>
 							<div class="checks">
-								<div class="check-item" v-for="item in tasks.colly" :key="`colly-${item}`">
+								<label class="check-item" v-for="item in tasks.colly" :key="`colly-${item}`">
 									<input type="checkbox" v-model="draft.colly[item]" />
 									<span>{{ item }}</span>
-								</div>
+								</label>
 							</div>
 						</article>
 
@@ -1998,10 +2057,10 @@
 								<span class="person-badge"><img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="" /> cheer</span>
 							</h4>
 							<div class="checks">
-								<div class="check-item" v-for="item in tasks.bbaebjji" :key="`bbaebjji-${item}`">
+								<label class="check-item" v-for="item in tasks.bbaebjji" :key="`bbaebjji-${item}`">
 									<input type="checkbox" v-model="draft.bbaebjji[item]" />
 									<span>{{ item }}</span>
-								</div>
+								</label>
 							</div>
 						</article>
 					</div>
@@ -2029,16 +2088,16 @@
 						<table v-if="filteredEntries.length">
 							<thead>
 								<tr>
-									<th>날짜</th>
-									<th>콜리</th>
-									<th>뱁찌</th>
+									<th scope="col">날짜</th>
+									<th scope="col">콜리</th>
+									<th scope="col">뱁찌</th>
 								</tr>
 							</thead>
 							<tbody>
 								<tr v-for="entry in filteredEntries" :key="entry.date">
-									<td>{{ entry.date }}</td>
-									<td>{{ checkedItems(entry.record.colly).join(', ') || '-' }}</td>
-									<td>{{ checkedItems(entry.record.bbaebjji).join(', ') || '-' }}</td>
+									<td class="record-date">{{ entry.date }}</td>
+									<td class="record-colly">{{ checkedItems(entry.record.colly).join(', ') || '-' }}</td>
+									<td class="record-bbaebjji">{{ checkedItems(entry.record.bbaebjji).join(', ') || '-' }}</td>
 								</tr>
 							</tbody>
 						</table>
