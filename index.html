@@ -424,10 +424,44 @@
 			}
 
 			.status-row {
+				position: relative;
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 				gap: 1px;
 				min-height: 28px;
+			}
+
+			.completion-fireworks {
+				position: absolute;
+				inset: -12px;
+				z-index: 2;
+				display: grid;
+				place-items: center;
+				font-size: 44px;
+				line-height: 1;
+				background: radial-gradient(circle, rgba(255, 255, 255, 0.72) 0 24%, rgba(255, 238, 183, 0.28) 42%, transparent 70%);
+				text-shadow:
+					0 0 0.5px #fff,
+					0 0 5px #fff,
+					0 3px 5px rgba(93, 52, 31, 0.36);
+				filter: drop-shadow(0 0 6px rgba(255, 255, 255, 0.96));
+				pointer-events: none;
+				animation: completion-burst 3.6s ease-out 1.2s infinite;
+			}
+
+			@keyframes completion-burst {
+				0% {
+					opacity: 0;
+					transform: scale(0.45) rotate(-12deg);
+				}
+				65% {
+					opacity: 1;
+					transform: scale(1.16) rotate(5deg);
+				}
+				100% {
+					opacity: 1;
+					transform: scale(1) rotate(0deg);
+				}
 			}
 
 			.status-divider {
@@ -832,11 +866,115 @@
 				border-color: #b98957;
 				box-shadow: 0 0 0 3px rgba(209, 162, 112, 0.22);
 			}
-			}
 
 			.stats-panel {
+				--stats-gap: 14px;
 				display: grid;
-				gap: 18px;
+				gap: var(--stats-gap);
+			}
+
+			.grape-progress {
+				display: grid;
+				grid-template-columns: minmax(180px, 280px) 1fr;
+				align-items: center;
+				gap: 24px;
+				padding: 16px 20px;
+				border: 1px solid #d9c2a4;
+				border-radius: 16px;
+				background: linear-gradient(135deg, rgba(255, 247, 236, 0.96), rgba(237, 250, 243, 0.9));
+				box-shadow: 0 12px 30px rgba(95, 72, 46, 0.12);
+			}
+
+			.grape-art {
+				position: relative;
+				width: min(100%, 280px);
+				aspect-ratio: 525 / 635;
+				margin: 0 auto;
+			}
+
+			.grape-art__image {
+				display: block;
+				width: 100%;
+				height: 100%;
+				object-fit: contain;
+			}
+
+			.grape-fill {
+				position: absolute;
+				width: 8.1%;
+				aspect-ratio: 1;
+				transform: translate(-50%, -50%) scale(0.72);
+				border: 1px solid rgba(255, 255, 255, 0.9);
+				border-radius: 50%;
+				opacity: 0;
+				transition: opacity 0.35s ease, transform 0.35s ease;
+			}
+
+			.grape-fill.is-filled {
+				opacity: 0.86;
+				transform: translate(-50%, -50%) scale(1);
+			}
+
+			.grape-fill.grape-colly {
+				background: radial-gradient(circle at 35% 28%, #d9efff, #6da9df 68%, #3d78b5);
+				box-shadow: inset -3px -4px 5px rgba(35, 76, 126, 0.22), 0 2px 5px rgba(55, 105, 160, 0.2);
+			}
+
+			.grape-fill.grape-bbaebjji {
+				background: radial-gradient(circle at 35% 28%, #e4f7ff, #8bc9eb 68%, #4a91c6);
+				box-shadow: inset -3px -4px 5px rgba(37, 100, 140, 0.22), 0 2px 5px rgba(62, 126, 164, 0.2);
+			}
+
+			.grape-progress__copy {
+				display: grid;
+				gap: 8px;
+			}
+
+			.grape-progress__copy h3 {
+				margin: 0;
+				font-family: "Bagel Fat One", "Gowun Dodum", sans-serif;
+				font-size: 24px;
+				font-weight: 400;
+				color: #704b5d;
+			}
+
+			.grape-progress__copy p {
+				margin: 0;
+				color: #8d6a7a;
+				line-height: 1.6;
+			}
+
+			.grape-progress__count {
+				font-size: 30px;
+				font-weight: 700;
+				color: #6b3f58;
+			}
+
+			.grape-progress__legend {
+				display: flex;
+				flex-wrap: wrap;
+				gap: 8px 14px;
+				margin-top: 4px;
+				font-size: 13px;
+				color: #806575;
+			}
+
+			.grape-progress__legend span::before {
+				content: "";
+				display: inline-block;
+				width: 10px;
+				height: 10px;
+				margin-right: 5px;
+				border-radius: 50%;
+				vertical-align: -1px;
+			}
+
+			.grape-progress__legend .colly::before {
+				background: #4f8fc9;
+			}
+
+			.grape-progress__legend .bbaebjji::before {
+				background: #8bc9eb;
 			}
 
 			.stats-head {
@@ -903,7 +1041,7 @@
 			.stats-kpis {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 14px;
+				gap: var(--stats-gap);
 			}
 
 			.kpi-card {
@@ -958,7 +1096,7 @@
 			.stats-grid {
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
-				gap: 14px;
+				gap: var(--stats-gap);
 			}
 
 			.stat-group {
@@ -1218,6 +1356,7 @@
 				.day {
 					min-height: 80px;
 					padding: 3px;
+					overflow: hidden;
 				}
 
 				.date-num {
@@ -1236,18 +1375,41 @@
 					height: 12px;
 				}
 
+				.completion-fireworks {
+					inset: -2px;
+					font-size: 30px;
+				}
+
 				.stat-row {
 					grid-template-columns: 1fr;
 					gap: 4px;
 				}
 
-				.stats-kpis,
+				.stats-kpis {
+					grid-template-columns: repeat(2, minmax(0, 1fr));
+				}
+
 				.stats-grid {
 					grid-template-columns: 1fr;
 				}
 
-				.stats-panel {
+				.grape-progress {
+					grid-template-columns: minmax(140px, 190px) 1fr;
 					gap: 14px;
+					padding: 12px;
+				}
+
+				.grape-progress__copy h3 {
+					font-size: 20px;
+				}
+
+				.grape-progress__count {
+					font-size: 26px;
+				}
+
+				.stats-panel {
+					--stats-gap: 14px;
+					gap: var(--stats-gap);
 				}
 
 				.stats-head {
@@ -1325,7 +1487,7 @@
 								<span class="date-num">{{ day.dateObj.getDate() }}</span>
 							</div>
 							<div class="status" v-if="day.record">
-								<div class="status-row">
+								<div class="status-row" :title="allTasksDone(day.record.colly, 'colly') ? '콜리 4개 항목 모두 성공' : ''">
 									<span
 										class="task-icon icon-colly"
 										:class="{ 'is-failed': !state.done }"
@@ -1335,9 +1497,10 @@
 									>
 										<img class="task-icon__img" :src="state.icon" :alt="state.name" loading="lazy" />
 									</span>
+									<span v-if="allTasksDone(day.record.colly, 'colly')" class="completion-fireworks" aria-label="콜리 4개 항목 모두 성공">🎉</span>
 								</div>
 								<div class="status-divider"></div>
-								<div class="status-row">
+								<div class="status-row" :title="allTasksDone(day.record.bbaebjji, 'bbaebjji') ? '뱁찌 4개 항목 모두 성공' : ''">
 									<span
 										class="task-icon icon-bbaebjji"
 										:class="{ 'is-failed': !state.done }"
@@ -1347,6 +1510,7 @@
 									>
 										<img class="task-icon__img" :src="state.icon" :alt="state.name" loading="lazy" />
 									</span>
+									<span v-if="allTasksDone(day.record.bbaebjji, 'bbaebjji')" class="completion-fireworks" aria-label="뱁찌 4개 항목 모두 성공">🎉</span>
 								</div>
 							</div>
 						</button>
@@ -1429,6 +1593,27 @@
 
 				<section class="panel" v-show="activeTab === 'stats'">
 					<div class="stats-panel">
+						<div class="grape-progress">
+							<div class="grape-art" aria-label="월간 완주 포도 진행도">
+								<img class="grape-art__image" src="assets/bgGrape.jpg" alt="포도 송이" />
+								<span
+									v-for="(position, idx) in grapePositions"
+									:key="`grape-${idx}`"
+									class="grape-fill"
+									:class="[`grape-${grapeSuccesses[idx]}`, { 'is-filled': idx < grapeSuccesses.length }]"
+									:style="{ left: `${position.x}%`, top: `${position.y}%` }"
+								></span>
+							</div>
+							<div class="grape-progress__copy">
+								<h3>이번 달 완주 포도</h3>
+								<p>하루의 4개 항목을 모두 성공할 때마다 포도알이 위에서부터 채워져요.</p>
+								<div class="grape-progress__count">{{ grapeSuccesses.length }} / {{ grapePositions.length }}</div>
+								<div class="grape-progress__legend">
+									<span class="colly">콜리 완주</span>
+									<span class="bbaebjji">뱁찌 완주</span>
+								</div>
+							</div>
+						</div>
 						<div class="stats-head">
 							<h3 class="form-header">월간 성공률 통계</h3>
 							<div class="select-wrap">
@@ -1618,6 +1803,22 @@
 				colly: ["운동", "금주", "독서", "영어공부"],
 				bbaebjji: ["운동", "금주", "독서", "중국어"]
 			};
+
+			const GRAPE_POSITIONS = [
+				...[[30.5, 23], [39, 23], [47, 23], [55, 23], [63, 23], [71, 23]],
+				...[[26.5, 29], [35, 29], [43, 29], [51.5, 29], [60, 29], [68, 29], [76, 29]],
+				...[[22.5, 35.5], [30.5, 35.5], [39, 35.5], [47, 35.5], [55, 35.5], [63, 35.5], [71, 35.5], [79, 35.5]],
+				...[[26, 42], [34.5, 42], [43, 42], [51, 42], [59, 42], [67, 42], [75, 42]],
+				...[[22, 48], [30, 48], [38.5, 48], [46, 48], [54, 48], [62, 48], [70, 48], [78, 48]],
+				...[[26, 54.5], [34, 54.5], [42, 54.5], [50, 54.5], [58, 54.5], [66, 54.5], [74, 54.5]],
+				...[[22, 61], [30, 61], [38, 61], [46, 61], [54, 61], [62, 61], [70, 61]],
+				...[[26, 67], [34, 67], [42, 67], [50, 67], [58, 67], [66, 67]],
+				...[[30, 73], [38, 73], [46, 73], [54, 73], [62, 73]],
+				...[[34, 79], [42, 79], [50, 79], [58, 79]],
+				...[[38, 85], [46, 85], [54, 85]],
+				...[[42, 91], [50, 91]],
+				...[[50, 97]]
+			].map(([x, y]) => ({ x, y }));
 
 			function makeEmptyChecklist(items) {
 				return Object.fromEntries(items.map((name) => [name, false]));
@@ -1881,6 +2082,27 @@
 						};
 					});
 
+					const grapeSuccesses = computed(() => {
+						const successes = [];
+						const [yearText, monthText] = statsMonth.value.split("-");
+						const year = Number(yearText);
+						const monthIndex = Number(monthText) - 1;
+						if (!Number.isFinite(year) || !Number.isFinite(monthIndex)) return successes;
+
+						const totalDays = new Date(year, monthIndex + 1, 0).getDate();
+						for (let day = 1; day <= totalDays; day += 1) {
+							const dateKey = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
+							const record = records.value[dateKey];
+							if (!record) continue;
+							for (const personKey of ["colly", "bbaebjji"]) {
+								if (TASKS[personKey].every((task) => record[personKey]?.[task])) {
+									successes.push(personKey);
+								}
+							}
+						}
+						return successes;
+					});
+
 					const entries = computed(() =>
 						Object.entries(records.value)
 							.map(([date, record]) => ({ date, record }))
@@ -1968,6 +2190,8 @@
 						icon: ICON_MAP[personKey][name],
 						done: Boolean(personRecord && personRecord[name])
 					}));
+
+					const allTasksDone = (personRecord, personKey) => TASKS[personKey].every((name) => Boolean(personRecord && personRecord[name]));
 
 					const checkedItems = (personRecord) => Object.entries(personRecord || {})
 						.filter(([, checked]) => checked)
@@ -2072,12 +2296,15 @@
 						statsMonthOptions,
 						statsDaysInMonth,
 						monthlyStats,
+						grapePositions: GRAPE_POSITIONS,
+						grapeSuccesses,
 						overviewMonth,
 						popup,
 						saveSuccessPopup,
 						changeMonth,
 						selectDate,
 						taskIconStates,
+						allTasksDone,
 						checkedItems,
 						checkedItemsWithIcons,
 						personAveragePercent,
