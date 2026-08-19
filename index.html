@@ -1593,6 +1593,16 @@
 
 				<section class="panel" v-show="activeTab === 'stats'">
 					<div class="stats-panel">
+						<div class="stats-head">
+							<h3 class="form-header">월간 성공률 통계</h3>
+							<div class="select-wrap">
+								<select v-model="statsMonth">
+									<option v-for="m in statsMonthOptions" :key="m.value" :value="m.value">{{ m.label }}</option>
+								</select>
+							</div>
+							<span class="saved">기준 일수: {{ statsDaysInMonth }}일</span>
+						</div>
+
 						<div class="grape-progress">
 							<div class="grape-art" aria-label="월간 완주 포도 진행도">
 								<img class="grape-art__image" src="assets/bgGrape.jpg" alt="포도 송이" />
@@ -1613,15 +1623,6 @@
 									<span class="bbaebjji">뱁찌 완주</span>
 								</div>
 							</div>
-						</div>
-						<div class="stats-head">
-							<h3 class="form-header">월간 성공률 통계</h3>
-							<div class="select-wrap">
-								<select v-model="statsMonth">
-									<option v-for="m in statsMonthOptions" :key="m.value" :value="m.value">{{ m.label }}</option>
-								</select>
-							</div>
-							<span class="saved">기준 일수: {{ statsDaysInMonth }}일</span>
 						</div>
 
 						<div class="stats-kpis">
