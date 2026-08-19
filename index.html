@@ -1141,17 +1141,24 @@
 
 			.grape-progress {
 				position: relative;
-				overflow: hidden;
+				overflow: visible;
 				display: grid;
-				grid-template-columns: minmax(190px, 270px) minmax(0, 1fr);
+				grid-template-columns: 300px minmax(0, 1fr);
 				align-items: center;
-				gap: 24px;
-				padding: 14px;
-				min-height: 238px;
+				gap: 28px;
+				padding: 18px 22px;
+				min-height: 292px;
 				border: 1px solid #d8c4b2;
 				border-radius: 22px;
 				background: #ffffff;
 				box-shadow: 0 16px 32px rgba(95, 72, 46, 0.13), inset 0 1px 0 rgba(255,255,255,0.9);
+				transition: border-color 0.25s ease, box-shadow 0.25s ease, background 0.25s ease;
+			}
+
+			.grape-progress:has(.grape-milestone--wine) {
+				border-color: #d9a8b9;
+				background: linear-gradient(110deg, #fffdfd 0%, #fff8fb 54%, #fffdf8 100%);
+				box-shadow: 0 18px 36px rgba(137, 78, 104, 0.18), 0 0 0 4px rgba(238, 185, 205, 0.18), inset 0 1px 0 #ffffff;
 			}
 
 			.grape-progress::before {
@@ -1165,9 +1172,9 @@
 
 			.grape-art {
 				position: relative;
-				width: min(100%, 280px);
+				width: 250px;
 				aspect-ratio: 602 / 640;
-				margin: 0 auto;
+				margin: 0 auto 44px 8px;
 				border: 1px solid #eee4dc;
 				border-radius: 18px;
 				background: linear-gradient(145deg, #fffdfa, #f9fbfa);
@@ -1193,9 +1200,42 @@
 				filter: drop-shadow(0 5px 7px rgba(91, 72, 89, 0.1));
 			}
 
+			.grape-milestone {
+				position: absolute;
+				bottom: -10px;
+				z-index: 2;
+				display: block;
+				width: 122px;
+				height: 122px;
+				object-fit: contain;
+				filter: drop-shadow(0 5px 5px rgba(77, 57, 67, 0.18));
+				animation: milestone-pop 0.45s cubic-bezier(0.2, 0.8, 0.2, 1);
+			}
+
+			.grape-milestone--wine {
+				left: -18%;
+			}
+
+			.grape-milestone--cognac {
+				right: -18%;
+				width: 132px;
+				height: 122px;
+			}
+
+			@keyframes milestone-pop {
+				from {
+					opacity: 0;
+					transform: translateY(10px) scale(0.82);
+				}
+				to {
+					opacity: 1;
+					transform: translateY(0) scale(1);
+				}
+			}
+
 			.grape-fill {
 				position: absolute;
-				width: 7.8%;
+				width: 8.25%;
 				aspect-ratio: 1;
 				transform: translate(-50%, -50%) scale(0.72);
 				border: 1px solid rgba(255, 255, 255, 0.9);
@@ -1226,8 +1266,24 @@
 				gap: 9px;
 				align-content: center;
 				max-width: 360px;
-				padding: 8px 0 8px 24px;
+				padding: 12px 0 12px 28px;
 				border-left: 1px solid #eadfd8;
+			}
+
+			.grape-progress:has(.grape-milestone--wine) .grape-progress__copy h3::before {
+				content: "완주 보너스";
+				display: block;
+				width: fit-content;
+				margin-bottom: 7px;
+				padding: 4px 8px;
+				border: 1px solid #e6b4c5;
+				border-radius: 999px;
+				background: linear-gradient(135deg, #fff0f5, #fff9e8);
+				font-family: "Gowun Dodum", sans-serif;
+				font-size: 10px;
+				font-weight: 700;
+				letter-spacing: 0.08em;
+				color: #9b5d77;
 			}
 
 			.grape-progress__copy h3 {
@@ -1261,6 +1317,12 @@
 				line-height: 1;
 				letter-spacing: -0.02em;
 				color: #623c55;
+			}
+
+			.grape-progress:has(.grape-milestone--wine) .grape-progress__count {
+				border-color: #dfadc0;
+				background: linear-gradient(135deg, #fff0f5, #fff8e8);
+				box-shadow: 0 6px 14px rgba(167, 91, 119, 0.14);
 			}
 
 			.grape-progress__legend {
@@ -1744,9 +1806,26 @@
 				}
 
 				.grape-progress {
-					grid-template-columns: minmax(140px, 190px) 1fr;
-					gap: 14px;
-					padding: 12px;
+					grid-template-columns: 1fr;
+					gap: 18px;
+					padding: 16px;
+					min-height: 0;
+				}
+
+				.grape-art {
+					width: min(100%, 190px);
+					margin: 0 auto 38px;
+				}
+
+				.grape-milestone {
+					bottom: -16px;
+					width: 84px;
+					height: 84px;
+				}
+
+				.grape-milestone--cognac {
+					width: 92px;
+					height: 84px;
 				}
 
 				.grape-progress__copy h3 {
@@ -1754,8 +1833,9 @@
 				}
 
 				.grape-progress__copy {
-					padding: 0;
+					padding: 8px 2px 2px;
 					border-left: 0;
+					max-width: none;
 				}
 
 				.grape-progress__count {
@@ -1992,11 +2072,13 @@
 									:class="[`grape-${grapeSuccesses[idx]}`, { 'is-filled': idx < grapeSuccesses.length }]"
 									:style="{ left: `${position.x}%`, top: `${position.y}%` }"
 								></span>
+								<img v-if="grapeSuccesses.length >= 61" class="grape-milestone grape-milestone--wine" src="assets/imgWine.png" alt="61번째 완주 와인" />
+								<img v-if="grapeSuccesses.length >= 62" class="grape-milestone grape-milestone--cognac" src="assets/imgCognac.png" alt="62번째 완주 코냑" />
 							</div>
 							<div class="grape-progress__copy">
 								<h3>이번 달 완주 포도</h3>
 								<p>하루의 4개 항목을 모두 성공할 때마다 포도알이 위에서부터 채워져요.</p>
-								<div class="grape-progress__count">{{ grapeSuccesses.length }} / {{ grapePositions.length }}</div>
+								<div class="grape-progress__count">{{ grapeSuccesses.length }} / {{ grapeTarget }}</div>
 								<div class="grape-progress__legend">
 									<span class="colly">콜리 완주</span>
 									<span class="bbaebjji">뱁찌 완주</span>
@@ -2202,15 +2284,15 @@
 			const GRAPE_POSITIONS = [
 				...[[22.5, 24.8], [30.6, 24.8], [39, 24.8], [47.3, 24.8], [55.6, 24.8], [63.9, 24.8], [72.3, 24.8]],
 				...[[18.3, 32.5], [26.6, 32.5], [34.9, 32.5], [43.2, 32.5], [51.5, 32.5], [59.8, 32.5], [68.1, 32.5], [76.4, 32.5]],
-				...[[15.9, 40.6], [24.1, 40.6], [32.2, 40.6], [40.4, 40.6], [48.5, 40.6], [56.5, 40.6], [64.6, 40.6], [72.8, 40.6], [80.9, 40.6]],
-				...[[20.1, 48.3], [28.4, 48.3], [36.5, 48.3], [44.7, 48.3], [52.8, 48.3], [60.9, 48.3], [69.1, 48.3], [77.2, 48.3]],
-				...[[24.1, 56], [32.2, 56], [40.4, 56], [48.5, 56], [56.6, 56], [64.8, 56], [72.9, 56]],
-				...[[28.2, 63.8], [36.5, 63.8], [44.7, 63.8], [52.8, 63.8], [60.9, 63.8], [69.1, 63.8]],
-				...[[32.4, 71.4], [40.5, 71.4], [48.7, 71.4], [56.8, 71.4], [64.9, 71.4]],
-				...[[36.4, 79.1], [44.7, 79.1], [52.7, 79.1], [60.8, 79.1]],
-				...[[40.9, 86.7], [48.8, 86.7], [57, 86.7]],
-				...[[44.9, 94.4], [52.9, 94.4]],
-				...[[50, 97]]
+				...[[15.9, 40.2], [24.1, 40.2], [32.2, 40.2], [40.4, 40.2], [48.5, 40.2], [56.5, 40.2], [64.6, 40.2], [72.8, 40.2], [80.9, 40.2]],
+				...[[20.1, 47.8], [28.4, 47.8], [36.5, 47.8], [44.7, 47.8], [52.8, 47.8], [60.9, 47.8], [69.1, 47.8], [77.2, 47.8]],
+				...[[24.1, 55.3], [32.2, 55.3], [40.4, 55.3], [48.5, 55.3], [56.6, 55.3], [64.8, 55.3], [72.9, 55.3]],
+				...[[28.2, 62.7], [36.5, 62.7], [44.7, 62.7], [52.8, 62.7], [60.9, 62.7], [69.1, 62.7]],
+				...[[32.4, 69.7], [40.5, 69.7], [48.7, 69.7], [56.8, 69.7], [64.9, 69.7]],
+				...[[36.4, 75.9], [44.7, 75.9], [52.7, 75.9], [60.8, 75.9]],
+				...[[40.9, 82.3], [48.8, 82.3], [57, 82.3]],
+				...[[44.9, 88.7], [52.9, 88.7]],
+				...[[50, 95]]
 			].map(([x, y]) => ({ x, y }));
 
 			function makeEmptyChecklist(items) {
@@ -2507,6 +2589,8 @@
 						return successes;
 					});
 
+					const grapeTarget = computed(() => (statsDaysInMonth.value || 0) * 2);
+
 					const entries = computed(() =>
 						Object.entries(records.value)
 							.map(([date, record]) => ({ date, record }))
@@ -2733,6 +2817,7 @@
 						monthlyStats,
 						grapePositions: GRAPE_POSITIONS,
 						grapeSuccesses,
+						grapeTarget,
 						overviewMonth,
 						popup,
 						saveSuccessPopup,
