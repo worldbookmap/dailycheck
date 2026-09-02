@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-02T03:53:34.254Z",
+  "updatedAt": "2026-09-02T03:53:43.783Z",
   "records": {
     "2026-08-01": {
       "colly": {
@@ -461,7 +461,7 @@
       },
       "bbaebjji": {
         "운동": true,
-        "금주": true,
+        "금주": false,
         "독서": false,
         "다이어트": true,
         "언어": true
