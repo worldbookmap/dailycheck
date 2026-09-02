@@ -2010,7 +2010,7 @@
 									<span v-if="allTasksDone(day.record.colly, 'colly')" class="completion-fireworks" aria-label="콜리 4개 항목 모두 성공">🎉</span>
 								</div>
 								<div class="status-divider"></div>
-								<div class="status-row" :title="allTasksDone(day.record.bbaebjji, 'bbaebjji') ? '뱁찌 4개 항목 모두 성공' : ''">
+								<div class="status-row" :title="allTasksDone(day.record.bbaebjji, 'bbaebjji') ? '뱁찌 루틴 성공' : ''">
 									<span
 										class="task-icon icon-bbaebjji"
 										:class="{ 'is-failed': !state.done }"
@@ -2020,7 +2020,7 @@
 									>
 										<img class="task-icon__img" :src="state.icon" :alt="state.name" loading="lazy" />
 									</span>
-									<span v-if="allTasksDone(day.record.bbaebjji, 'bbaebjji')" class="completion-fireworks" aria-label="뱁찌 4개 항목 모두 성공">🎉</span>
+									<span v-if="allTasksDone(day.record.bbaebjji, 'bbaebjji')" class="completion-fireworks" aria-label="뱁찌 루틴 성공">🎉</span>
 								</div>
 							</div>
 						</button>
@@ -2057,7 +2057,7 @@
 								<span class="person-badge"><img src="https://cdn-icons-png.flaticon.com/512/616/616430.png" alt="" /> cheer</span>
 							</h4>
 							<div class="checks">
-								<label class="check-item" v-for="item in tasks.bbaebjji" :key="`bbaebjji-${item}`">
+								<label class="check-item" v-for="item in visibleTasksForPerson('bbaebjji')" :key="`bbaebjji-${item}`">
 									<input type="checkbox" v-model="draft.bbaebjji[item]" />
 									<span>{{ item }}</span>
 								</label>
@@ -2337,7 +2337,17 @@
 
 			const TASKS = {
 				colly: ["운동", "금주", "독서", "영어"],
-				bbaebjji: ["운동", "금주", "독서", "언어"]
+				bbaebjji: ["운동", "금주", "독서", "다이어트", "언어"]
+			};
+
+			const BBAEBJJI_HIDDEN_TASKS = new Set(["독서"]);
+			const visibleTasksForPerson = (personKey) => (TASKS[personKey] || []).filter((task) => !BBAEBJJI_HIDDEN_TASKS.has(task) || personKey !== "bbaebjji");
+
+			const isPersonComplete = (personKey, personRecord) => {
+				if (personKey === "bbaebjji") {
+					return Boolean(personRecord && personRecord["운동"] && personRecord["금주"] && personRecord["언어"] && (personRecord["다이어트"] || personRecord["독서"]));
+				}
+				return (TASKS[personKey] || []).every((task) => Boolean(personRecord && personRecord[task]));
 			};
 
 			const GRAPE_POSITIONS = [
@@ -2605,11 +2615,16 @@
 						const year = Number(yearText);
 						const monthIndex = Number(monthText) - 1;
 
-						const calcFor = (personKey) => TASKS[personKey].map((task) => {
+						const calcFor = (personKey) => visibleTasksForPerson(personKey).map((task) => {
 							let successCount = 0;
 							for (let day = 1; day <= totalDays; day += 1) {
 								const dateKey = `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
-								if (records.value[dateKey] && records.value[dateKey][personKey] && records.value[dateKey][personKey][task]) {
+								const entry = records.value[dateKey]?.[personKey];
+								if (personKey === "bbaebjji" && task === "다이어트") {
+									if (entry && (entry["다이어트"] || entry["독서"])) successCount += 1;
+									continue;
+								}
+								if (entry && entry[task]) {
 									successCount += 1;
 								}
 							}
@@ -2640,7 +2655,7 @@
 							const record = records.value[dateKey];
 							if (!record) continue;
 							for (const personKey of ["colly", "bbaebjji"]) {
-								if (TASKS[personKey].every((task) => record[personKey]?.[task])) {
+								if (isPersonComplete(personKey, record[personKey])) {
 									successes.push(personKey);
 								}
 							}
@@ -2728,23 +2743,26 @@
 							"운동": "https://cdn-icons-png.flaticon.com/512/3043/3043887.png",
 							"금주": "https://cdn-icons-png.flaticon.com/512/2745/2745060.png",
 							"독서": "https://cdn-icons-png.flaticon.com/512/2232/2232688.png",
+							"다이어트": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='26' fill='%23fff2e6' stroke='%23ff8a65' stroke-width='3'/%3E%3Cpath d='M18 22h28M18 42h28M24 18v28M40 18v28M16 29h8M40 29h8M16 35h8M40 35h8M22 22v20M42 22v20' stroke='%23ff8a65' stroke-width='3' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E",
 							"언어": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Ccircle cx='32' cy='32' r='24' fill='%23eaf2ff' stroke='%235d7df6' stroke-width='3'/%3E%3Cpath d='M8 32h48M32 8c-6 6-9 14-9 24s3 18 9 24c6-6 9-14 9-24s-3-18-9-24z' fill='none' stroke='%235d7df6' stroke-width='3' stroke-linecap='round'/%3E%3Cpath d='M16 18c4 4 7 11 7 14s-3 10-7 14M48 18c-4 4-7 11-7 14s3 10 7 14' fill='none' stroke='%235d7df6' stroke-width='3' stroke-linecap='round'/%3E%3C/svg%3E"
 						}
 					};
 
-					const taskIconStates = (personRecord, personKey) => TASKS[personKey].map((name) => ({
+					const taskIconStates = (personRecord, personKey) => visibleTasksForPerson(personKey).map((name) => ({
 						name,
 						icon: ICON_MAP[personKey][name],
 						done: Boolean(personRecord && personRecord[name])
 					}));
 
-					const allTasksDone = (personRecord, personKey) => TASKS[personKey].every((name) => Boolean(personRecord && personRecord[name]));
+					const allTasksDone = (personRecord, personKey) => isPersonComplete(personKey, personRecord);
 
 					const checkedItems = (personRecord) => Object.entries(personRecord || {})
 						.filter(([, checked]) => checked)
-						.map(([name]) => name);
+						.map(([name]) => name)
+						.filter((name) => !(name === "독서" && personRecord && personRecord["다이어트"]));
 
 					const checkedItemsWithIcons = (personRecord, personKey) => checkedItems(personRecord)
+						.filter((name) => !(personKey === "bbaebjji" && BBAEBJJI_HIDDEN_TASKS.has(name)))
 						.map((name) => ({
 							name,
 							icon: ICON_MAP[personKey][name]
@@ -2860,6 +2878,7 @@
 						currentYear,
 						currentMonth,
 						selectedDate,
+						visibleTasksForPerson,
 						tasks: TASKS,
 						draft,
 						saveMessage,
