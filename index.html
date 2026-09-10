@@ -744,6 +744,45 @@
 				gap: 8px;
 			}
 
+			.weight-input {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 10px;
+				margin-top: 10px;
+				padding: 8px 10px 8px 12px;
+				border: 1px solid rgba(226, 191, 208, 0.9);
+				border-radius: 10px;
+				background: rgba(255, 255, 255, 0.76);
+				font-size: 12px;
+				font-weight: 700;
+				color: #765b5b;
+			}
+
+			.weight-input__field {
+				display: inline-flex;
+				align-items: center;
+				gap: 4px;
+				color: #8b6c6b;
+			}
+
+			.weight-input input {
+				width: 70px;
+				padding: 6px 7px;
+				border: 1px solid #dfc4cf;
+				border-radius: 7px;
+				background: #fffdfd;
+				font: inherit;
+				font-variant-numeric: tabular-nums;
+				text-align: right;
+				color: #563f45;
+			}
+
+			.weight-input input:focus {
+				outline: 2px solid rgba(223, 131, 169, 0.24);
+				border-color: #d982aa;
+			}
+
 			.check-item {
 				display: flex;
 				align-items: center;
@@ -1566,6 +1605,103 @@
 				gap: var(--stats-gap);
 			}
 
+			.weight-chart {
+				border: 1px solid #ddc4a7;
+				border-radius: 16px;
+				padding: 16px;
+				background: linear-gradient(145deg, rgba(255, 253, 249, 0.98), rgba(248, 244, 237, 0.94));
+				box-shadow: 0 12px 24px rgba(94, 69, 43, 0.09), inset 0 1px 0 rgba(255,255,255,0.85);
+			}
+
+			.weight-chart__head {
+				display: flex;
+				align-items: center;
+				justify-content: space-between;
+				gap: 12px;
+				margin-bottom: 8px;
+			}
+
+			.weight-chart h3 {
+				margin: 0;
+				font-family: "Bagel Fat One", "Gowun Dodum", sans-serif;
+				font-size: 17px;
+				font-weight: 400;
+				color: #5c4641;
+			}
+
+			.weight-chart p {
+				margin: 3px 0 0;
+				font-size: 11px;
+				color: #967b6c;
+			}
+
+			.weight-chart__legend {
+				display: flex;
+				gap: 10px;
+				font-size: 11px;
+				font-weight: 700;
+			}
+
+			.weight-chart__legend span::before {
+				content: "";
+				display: inline-block;
+				width: 8px;
+				height: 8px;
+				margin-right: 4px;
+				border-radius: 50%;
+				vertical-align: 1px;
+			}
+
+			.weight-chart__legend .colly::before { background: #e48668; }
+			.weight-chart__legend .bbaebjji::before { background: #54b994; }
+
+			.weight-chart__plot {
+				overflow-x: auto;
+				min-height: 230px;
+			}
+
+			.weight-chart svg {
+				display: block;
+				width: 100%;
+				min-width: 540px;
+				height: auto;
+			}
+
+			.weight-chart__grid-lines line {
+				stroke: #eadfd2;
+				stroke-width: 1;
+			}
+
+			.weight-chart__axis-labels text,
+			.weight-chart__date-labels text {
+				fill: #9a8275;
+				font-size: 11px;
+				font-variant-numeric: tabular-nums;
+				text-anchor: end;
+			}
+
+			.weight-chart__date-labels text {
+				text-anchor: middle;
+			}
+
+			.weight-line {
+				fill: none;
+				stroke-width: 3;
+				stroke-linecap: round;
+				stroke-linejoin: round;
+			}
+
+			.weight-line.colly { stroke: #e48668; }
+			.weight-line.bbaebjji { stroke: #54b994; }
+			.weight-points circle { stroke: #fffdf9; stroke-width: 2; }
+			.weight-points.colly circle { fill: #e48668; }
+			.weight-points.bbaebjji circle { fill: #54b994; }
+
+			.weight-chart__empty {
+				padding: 72px 0;
+				text-align: center;
+			}
+
 			.stat-group {
 				border: 1px solid #ddc4a7;
 				border-radius: 16px;
@@ -2049,6 +2185,13 @@
 									<span>{{ item }}</span>
 								</label>
 							</div>
+							<label class="weight-input">
+								<span>오늘 체중</span>
+								<div class="weight-input__field">
+									<input v-model.number="draft.weight.colly" type="number" min="50" max="80" step="0.1" placeholder="--" aria-label="콜리 체중" />
+									<span>kg</span>
+								</div>
+							</label>
 						</article>
 
 						<article class="person-card">
@@ -2062,6 +2205,13 @@
 									<span>{{ item }}</span>
 								</label>
 							</div>
+							<label class="weight-input">
+								<span>오늘 체중</span>
+								<div class="weight-input__field">
+									<input v-model.number="draft.weight.bbaebjji" type="number" min="50" max="80" step="0.1" placeholder="--" aria-label="뱁찌 체중" />
+									<span>kg</span>
+								</div>
+							</label>
 						</article>
 					</div>
 
@@ -2181,6 +2331,39 @@
 									<div class="bar-track"><div class="bar-fill bbaebjji" :style="{ width: `${row.percent}%` }"></div></div>
 									<div class="stat-value">{{ row.percent }}% · {{ row.successCount }}회</div>
 								</div>
+							</div>
+
+							<div class="weight-chart">
+								<div class="weight-chart__head">
+									<div>
+										<h3>체중 기록</h3>
+										<p>입력한 날짜의 체중만 표시돼요.</p>
+									</div>
+									<div class="weight-chart__legend">
+										<span class="colly">콜리</span>
+										<span class="bbaebjji">뱁찌</span>
+									</div>
+								</div>
+								<div class="weight-chart__plot" v-if="weightChart.hasData">
+									<svg viewBox="0 0 760 300" role="img" aria-label="월간 체중 그래프">
+										<g class="weight-chart__grid-lines">
+											<line v-for="tick in weightChart.ticks" :key="`line-${tick}`" x1="52" :y1="weightChart.y(tick)" x2="742" :y2="weightChart.y(tick)" />
+										</g>
+										<g class="weight-chart__axis-labels">
+											<text v-for="tick in weightChart.ticks" :key="`label-${tick}`" x="42" :y="weightChart.y(tick) + 4">{{ tick }}</text>
+										</g>
+										<g class="weight-chart__date-labels">
+											<text v-for="point in weightChart.dates" :key="`date-${point.date}`" :x="point.x" y="286">{{ point.label }}</text>
+										</g>
+										<template v-for="series in weightChart.series" :key="series.key">
+											<polyline v-if="series.points.length > 1" :class="`weight-line ${series.key}`" :points="series.points.map((point) => `${point.x},${point.y}`).join(' ')" />
+										</template>
+										<g v-for="series in weightChart.series" :key="`${series.key}-points`" :class="`weight-points ${series.key}`">
+											<circle v-for="point in series.points" :key="`${series.key}-${point.date}`" :cx="point.x" :cy="point.y" r="4" />
+										</g>
+									</svg>
+								</div>
+								<p v-else class="weight-chart__empty">이 달에는 아직 체중 기록이 없어요.</p>
 							</div>
 							</div>
 						</div>
@@ -2371,7 +2554,11 @@
 			function makeEmptyRecord() {
 				return {
 					colly: makeEmptyChecklist(TASKS.colly),
-					bbaebjji: makeEmptyChecklist(TASKS.bbaebjji)
+					bbaebjji: makeEmptyChecklist(TASKS.bbaebjji),
+					weight: {
+						colly: null,
+						bbaebjji: null
+					}
 				};
 			}
 
@@ -2385,9 +2572,20 @@
 			}
 
 			function sanitizeRecord(record) {
+				const sanitizeWeight = (value) => {
+					const numericValue = Number(value);
+					return Number.isFinite(numericValue) && numericValue >= 50 && numericValue <= 80
+						? Math.round(numericValue * 10) / 10
+						: null;
+				};
+
 				return {
 					colly: sanitizeChecklist(record?.colly, TASKS.colly),
-					bbaebjji: sanitizeChecklist(record?.bbaebjji, TASKS.bbaebjji)
+					bbaebjji: sanitizeChecklist(record?.bbaebjji, TASKS.bbaebjji),
+					weight: {
+						colly: sanitizeWeight(record?.weight?.colly),
+						bbaebjji: sanitizeWeight(record?.weight?.bbaebjji)
+					}
 				};
 			}
 
@@ -2639,6 +2837,38 @@
 						return {
 							colly: calcFor("colly"),
 							bbaebjji: calcFor("bbaebjji")
+						};
+					});
+
+					const weightChart = computed(() => {
+						const [yearText, monthText] = statsMonth.value.split("-");
+						const year = Number(yearText);
+						const monthIndex = Number(monthText) - 1;
+						const totalDays = statsDaysInMonth.value;
+						const chartLeft = 58;
+						const chartRight = 738;
+						const chartTop = 18;
+						const chartBottom = 254;
+						const xForDay = (day) => totalDays <= 1 ? chartLeft : chartLeft + ((day - 1) / (totalDays - 1)) * (chartRight - chartLeft);
+						const yForWeight = (weight) => chartBottom - ((weight - 50) / 30) * (chartBottom - chartTop);
+						const dates = Array.from({ length: totalDays }, (_, index) => ({
+							date: `${year}-${String(monthIndex + 1).padStart(2, "0")}-${String(index + 1).padStart(2, "0")}`,
+							label: String(index + 1),
+							x: xForDay(index + 1)
+						}));
+						const series = ["colly", "bbaebjji"].map((personKey) => ({
+							key: personKey,
+							points: dates
+								.map((datePoint) => ({ ...datePoint, weight: records.value[datePoint.date]?.weight?.[personKey] }))
+								.filter((point) => Number.isFinite(point.weight))
+								.map((point) => ({ ...point, y: yForWeight(point.weight) }))
+						}));
+						return {
+							hasData: series.some((item) => item.points.length),
+							ticks: [80, 70, 60, 50],
+							dates: dates.filter((_, index) => totalDays <= 10 || index === 0 || index === totalDays - 1 || (index + 1) % 5 === 0),
+							series,
+							y: yForWeight
 						};
 					});
 
@@ -2908,6 +3138,7 @@
 						personAveragePercent,
 						personTotalSuccess,
 						bestTask,
+						weightChart,
 						selectOverviewMonth,
 						selectStatsMonth,
 						saveSelectedDate,
