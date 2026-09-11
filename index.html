@@ -1605,9 +1605,12 @@
 				display: grid;
 				grid-template-columns: repeat(2, minmax(0, 1fr));
 				gap: var(--stats-gap);
+				min-width: 0;
 			}
 
 			.weight-chart {
+				grid-column: 1 / -1;
+				min-width: 0;
 				border: 1px solid #ddc4a7;
 				border-radius: 16px;
 				padding: 16px;
@@ -1665,7 +1668,6 @@
 			.weight-chart svg {
 				display: block;
 				width: 100%;
-				min-width: 540px;
 				height: auto;
 			}
 
@@ -1928,13 +1930,13 @@
 
 				.hero::before,
 				.hero::after {
-					width: 50%;
-					opacity: 0.5;
+					width: 58%;
+					opacity: 0.58;
 				}
 
 				.hero::before {
 					left: 0;
-					background-position: 28% center;
+					background-position: 42% center;
 				}
 
 				.hero::after {
@@ -1943,8 +1945,8 @@
 				}
 
 				.hero-blend {
-					width: min(40%, 196px);
-					filter: blur(24px);
+					width: min(30%, 120px);
+					filter: blur(20px);
 				}
 
 				.checks {
@@ -2000,6 +2002,11 @@
 
 				.stats-grid {
 					grid-template-columns: 1fr;
+				}
+
+				.weight-chart__head {
+					align-items: flex-start;
+					flex-wrap: wrap;
 				}
 
 				.grape-progress {
@@ -2695,7 +2702,7 @@
 					};
 
 					const fetchDataFileRecords = async () => {
-						const response = await fetch(DATA_FILE_ENDPOINT, { method: "GET" });
+						const response = await fetch(`${DATA_FILE_ENDPOINT}?t=${Date.now()}`, { method: "GET", cache: "no-store" });
 						if (!response.ok) {
 							throw new Error(`data 파일 GET 실패 (${response.status})`);
 						}
