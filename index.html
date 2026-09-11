@@ -1233,6 +1233,7 @@
 				display: grid;
 				gap: var(--stats-gap);
 				align-items: start;
+				min-width: 0;
 				padding: 2px 0;
 				color: #4d3c3b;
 			}
@@ -1466,6 +1467,7 @@
 				grid-template-columns: minmax(0, 1fr) auto auto;
 				align-items: center;
 				gap: 12px;
+				min-width: 0;
 				padding: 16px 18px;
 				border: 1px solid #d9c2a4;
 				border-radius: 18px;
@@ -2044,13 +2046,14 @@
 
 				.stats-head {
 					grid-template-columns: 1fr;
+					min-height: 148px;
 					padding: 12px;
 				}
 
 				.stats-head .form-header {
 					padding-right: 0;
 					font-size: 19px;
-					white-space: nowrap;
+					line-height: 1.35;
 				}
 
 				.stats-head .stats-select-wrap {
@@ -2064,7 +2067,11 @@
 
 				.stats-head::before,
 				.stats-head::after {
-					display: none;
+					display: block;
+					top: 0;
+					bottom: 0;
+					width: 42%;
+					opacity: 0.16;
 				}
 
 				.month-ctl {
