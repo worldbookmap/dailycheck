@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-09-12T02:16:30.772Z",
+  "updatedAt": "2026-09-13T14:37:00.809Z",
   "records": {
     "2026-08-01": {
       "colly": {
@@ -812,7 +812,7 @@
         "금주": false,
         "독서": false,
         "다이어트": false,
-        "언어": false
+        "언어": true
       },
       "weight": {
         "colly": 77.3,
