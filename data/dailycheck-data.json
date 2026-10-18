@@ -1,6 +1,6 @@
 {
   "version": 1,
-  "updatedAt": "2026-10-18T22:23:22.989Z",
+  "updatedAt": "2026-10-18T22:24:41.660Z",
   "records": {
     "2026-08-01": {
       "colly": {
@@ -1518,7 +1518,7 @@
         "언어": false
       },
       "weight": {
-        "colly": null,
+        "colly": 75.3,
         "bbaebjji": 55.7
       }
     }
